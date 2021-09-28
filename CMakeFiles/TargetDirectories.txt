@@ -1,0 +1,6 @@
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/CMakeFiles/ALL_BUILD.dir
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/samples/CMakeFiles/matrix_lib.headers.dir
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/samples/CMakeFiles/sample_matrix.dir
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/gtest/CMakeFiles/gtest.dir
+C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/test/CMakeFiles/test_matrix.dir

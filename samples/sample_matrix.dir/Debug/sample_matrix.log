@@ -1,0 +1,22 @@
+﻿  Building Custom Rule C:/Users/Win10_Game_OS/Desktop/Laba2/mp2-lab2-matrix-up/samples/CMakeLists.txt
+  sample_matrix.cpp
+C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\include\utmatrix.h(104,1): error C2440: return: невозможно преобразовать "int" в "T &"
+          with
+          [
+              T=int
+          ]
+C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\include\utmatrix.h(102): message : во время компиляции функции-члена класс шаблон "T &TVector<T>::operator [](int)"
+          with
+          [
+              T=int
+          ]
+C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\samples\sample_matrix.cpp(21): message : выполняется компиляция ссылки на экземпляр шаблон функции "T &TVector<T>::operator [](int)"
+          with
+          [
+              T=int
+          ]
+C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\samples\sample_matrix.cpp(21): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "TVector<T>"
+          with
+          [
+              T=int
+          ]

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\gtest\gtest-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Win10_Game_OS\Desktop\Laba2\mp2-lab2-matrix-up\gtest\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{C9AF5BDE-23C5-3084-BD92-767ACF53E903}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
