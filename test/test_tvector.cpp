@@ -8,7 +8,7 @@ TEST(TVector, can_create_vector_with_positive_length)
 
 TEST(TVector, cant_create_too_large_vector)
 {
-    ASSERT_ANY_THROW(TVector<int> v(TVector<int>::max_size + 1ull));
+    ASSERT_ANY_THROW(TVector<int>(static_cast<size_t>(TVector<int>::max_size + 1ull)));
 }
 
 TEST(TVector, throws_when_create_vector_with_negative_length)
