@@ -13,8 +13,7 @@ void main()
     TMatrix<int> a(5), b(5), c(5);
     int i, j;
     setlocale(LC_ALL, "Russian");
-    std::cout << "Тестирование программ поддержки представления треугольных матриц"
-              << std::endl;
+    std::cout << "Тестирование программ поддержки представления треугольных матриц" << std::endl;
     for (i = 0; i < 5; i++)
         for (j = i; j < 5; j++ )
         {
