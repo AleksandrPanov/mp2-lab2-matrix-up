@@ -92,7 +92,7 @@ TVector<T>::TVector(size_t size, size_t startIndex) :
 
     pVector = new T[size - startIndex];
 
-    if (std::is_arithmetic_v<T>)
+    if (std::is_arithmetic<T>::value)
         for (size_t i = 0; i < size - startIndex; ++i)
             pVector[i] = T(0);
 } /*-------------------------------------------------------------------------*/
