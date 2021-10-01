@@ -23,8 +23,8 @@ public:
     explicit TVector(int size, int startIndex = 0);       //конструктор инициализации
     explicit TVector(size_t size = 1, size_t startIndex = 0); //конструктор инициализации
 
-    template <class TSize, class TStartIndex>
-    TVector(TSize size, TStartIndex startIndex) = delete;
+    template <class OtherTypes>
+    TVector(OtherTypes size, OtherTypes startIndex) = delete;
 
     TVector(const TVector &v);                // конструктор копирования
     ~TVector();
