@@ -278,14 +278,14 @@ template <class T>
 TMatrix<T>::TMatrix(int s) : TVector<TVector<T> >(s)
 {
     for (int i = 0; i < s; i++)
-        setElement(i, TVector<T>(s - i, i));
+        TVector<TVector<T>>::setElement(i, TVector<T>(s - i, i));
 }
 
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
 {
     for (size_t i = 0; i < s; i++)
-        setElement(i, TVector<T>(s - i, i));
+        TVector<TVector<T>>::setElement(i, TVector<T>(s - i, i));
 }
 
 template <class T> // конструктор копирования
