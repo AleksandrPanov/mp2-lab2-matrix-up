@@ -257,11 +257,7 @@ public:
 
     TMatrix(const TMatrix &mt);               // копирование
     TMatrix(const TVector<TVector<T> > &mt);  // преобразование типа
-    bool operator==(const TMatrix &mt) const; // сравнение
-    bool operator!=(const TMatrix &mt) const; // сравнение
-    TMatrix& operator= (const TMatrix &mt);   // присваивание
-    TMatrix operator+ (const TMatrix &mt);    // сложение
-    TMatrix operator- (const TMatrix &mt);    // вычитание
+
 
     // ввод / вывод
     friend std::istream& operator>>(std::istream &in, TMatrix &mt)
@@ -300,32 +296,4 @@ template <class T> // конструктор преобразования тип
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
   TVector<TVector<T> >(mt) {}
 
-template <class T> // сравнение
-bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
-{
-    return TVector<T>::operator==(mt);
-}
 
-template <class T> // сравнение
-bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
-{
-    return TVector<T>::operator!=(mt);
-}
-
-template <class T> // присваивание
-TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
-{
-    return (TMatrix<T>)TVector<T>::operator=(mt);
-}
-
-template <class T> // сложение
-TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
-{
-    return (TMatrix<T>)TVector<T>::operator+(mt);
-}
-
-template <class T> // вычитание
-TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
-{
-    return (TMatrix<T>)TVector<T>::operator-(mt);
-}
