@@ -108,9 +108,9 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-    TMatrix<int> m1(5), m2(5);
+    TMatrix<int> m1(5);
     m1[0][0] = 1;
-    m2[0][0] = 1;
+    TMatrix<int> m2(m1);
     EXPECT_EQ(m2 == m1, true);
 }
 
