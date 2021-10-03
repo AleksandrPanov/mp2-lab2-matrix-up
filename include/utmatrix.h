@@ -303,29 +303,29 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
-    return TVector::operator==(mt);
+    return TVector<T>::operator==(mt);
 }
 
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 {
-    return TVector::operator!=(mt);
+    return TVector<T>::operator!=(mt);
 }
 
 template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
-    return (TMatrix<T>)TVector::operator=(mt);
+    return (TMatrix<T>)TVector<T>::operator=(mt);
 }
 
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-    return (TMatrix<T>)TVector::operator+(mt);
+    return (TMatrix<T>)TVector<T>::operator+(mt);
 }
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-    return (TMatrix<T>)TVector::operator-(mt);
+    return (TMatrix<T>)TVector<T>::operator-(mt);
 }
