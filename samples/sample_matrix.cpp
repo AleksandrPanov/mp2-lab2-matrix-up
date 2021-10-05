@@ -10,7 +10,7 @@
 
 void main()
 {
-    TMatrix<int> a(5), b(5), c(5);
+    /*TMatrix<int> a(5), b(5), c(5);
     int i, j;
     setlocale(LC_ALL, "Russian");
     std::cout << "Тестирование программ поддержки представления треугольных матриц"
@@ -24,6 +24,15 @@ void main()
     c = a + b;
     std::cout << "Matrix a = " << std::endl << a << std::endl;
     std::cout << "Matrix b = " << std::endl << b << std::endl;
-    std::cout << "Matrix c = a + b" << std::endl << c << std::endl;
+    std::cout << "Matrix c = a + b" << std::endl << c << std::endl;*/
+
+    TVector<int> vector(5, 2);
+    std::cin >> vector;
+
+    TVector<int> vector2(5, 2);
+    //std::cin >> vector;
+    vector2 = vector + 3;
+    std::cout << "\n" << vector2;
+
 }
 //---------------------------------------------------------------------------
