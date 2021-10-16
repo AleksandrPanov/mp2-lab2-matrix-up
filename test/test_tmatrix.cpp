@@ -26,17 +26,28 @@ TEST(TMatrix, can_create_copied_matrix)
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-    ADD_FAILURE();
+    TMatrix<int> m(5);
+    TMatrix<int> v(m);
+    EXPECT_EQ(m, v);
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-    ADD_FAILURE();
+    TMatrix<int> m(5);
+    TMatrix<int> v(m);
+
+    TVector<int> last(5, 4);
+    last.setElement(4, 15);
+    m.setElement(4, last);
+
+    EXPECT_NE(m, v);
 }
 
 TEST(TMatrix, can_get_size)
 {
-    ADD_FAILURE();
+    TMatrix<int> m(5);
+
+    EXPECT_EQ(m.getSize(), 5);
 }
 
 TEST(TMatrix, can_set_and_get_element)
