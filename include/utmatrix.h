@@ -186,10 +186,12 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
 template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
-    TVector<T> tmp(size, startIndex);
+    TVector<T> tmp(*this);
 
-    for (size_t i = 0; i < size - startIndex; ++i)
-        tmp.pVector[i] = pVector[i] + val;
+    for (size_t i = startIndex; i < size; ++i)
+    {
+        tmp[i] += val;
+    }
 
     return tmp;
 } 
@@ -197,10 +199,12 @@ TVector<T> TVector<T>::operator+(const T &val)
 template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
-    TVector<T> tmp(size, startIndex);
+    TVector<T> tmp(*this);
 
-    for (size_t i = 0; i < size - startIndex; ++i)
-        tmp.pVector[i] = pVector[i] - val;
+    for (size_t i = startIndex; i < size; ++i)
+    {
+        tmp[i] -= val;
+    }
 
     return tmp;
 } 
@@ -209,10 +213,12 @@ template <class T> // умножить на скаляр
 TVector<T> TVector<T>::operator*(const T &val)
 {
 
-    TVector<T> tmp(size, startIndex);
+    TVector<T> tmp(*this);
 
-    for (size_t i = 0; i < size - startIndex; ++i)
-        tmp.pVector[i] = pVector[i] * val;
+    for (size_t i = startIndex; i < size; ++i)
+    {
+        tmp[i] *= val;
+    }
 
     return tmp;
 } 
@@ -230,10 +236,12 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
         exception exp = not_eq_start_ind;
         throw exp;
     }
-    TVector<T> tmp(size, startIndex);
+    TVector<T> tmp(*this);
 
-    for (size_t i = 0; i < size - startIndex; ++i)
-        tmp.pVector[i] = pVector[i] + v.pVector[i];
+    for (size_t i = 0; i < size-startIndex; ++i)
+    {
+        tmp.pVector[i]+=v.pVector[i];
+    }
 
     return tmp;
 } 
@@ -251,10 +259,12 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
         exception exp = not_eq_start_ind;
         throw exp;
     }
-     TVector<T> tmp(size, startIndex);
+    TVector<T> tmp(*this);
 
     for (size_t i = 0; i < size - startIndex; ++i)
-        tmp.pVector[i] = pVector[i] - v.pVector[i];
+    {
+        tmp.pVector[i] -= v.pVector[i];
+    }
 
     return tmp;
 } 

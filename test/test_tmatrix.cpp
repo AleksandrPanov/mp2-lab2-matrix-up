@@ -49,8 +49,8 @@ TEST(TMatrix, can_get_size)
 TEST(TMatrix, can_set_and_get_element)
 {
     TMatrix<int> a(5);
-    a[0][0] = 1;
-    EXPECT_NE(1, a[0][0]);
+    a[0].setElement(2, 7);
+    EXPECT_EQ(7, a[0].getElement(2));
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
@@ -132,7 +132,7 @@ TEST(TMatrix, can_add_matrices_with_equal_size)
     b[0][0] = 1;
     b[0][1] = 2;
     a = a + b;
-    EXPECT_EQ(a[0][0], 2);
+    EXPECT_EQ(a[0][1], 4);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)

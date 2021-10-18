@@ -142,8 +142,9 @@ TEST(TVector, can_add_scalar_to_vector)
 {
     TVector<int> v1(5);
     TVector<int> v2(3);
+    v1[3] = 0;
     v2 = v1 + 5;
-    EXPECT_EQ(v2[2], 5);
+    EXPECT_EQ(v2[3], 5);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)
@@ -151,7 +152,7 @@ TEST(TVector, can_subtract_scalar_from_vector)
     TVector<int> v1(5);
     TVector<int> v2(3);
     v1[2] = 10;
-    v2 = v1 -5 ;
+    v2 = v1 - 5 ;
     EXPECT_EQ(v2[2], 5);
 }
 
@@ -168,10 +169,14 @@ TEST(TVector, can_add_vectors_with_equal_size)
 {
     TVector<int> v1(5);
     TVector<int> v2(5);
-    v1[2] = 1;
-    v2[2] = 3;
-    v2 = v1 + v2;
-    EXPECT_EQ(v2[2], 4);
+    TVector<int> v3(5);
+    for (int i = 0; i < 5; ++i)
+    {
+        v1[i] = 1;
+        v2[i] = 1;
+        v3[i] = 2;
+    }
+    EXPECT_EQ(v2+v1, v3);
 }
 
 
@@ -186,12 +191,15 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
 {
     TVector<int> v1(5);
     TVector<int> v2(5);
-    v1[2] = 3;
-    v2[2] = 1;
-    v2 = v1 - v2;
-    EXPECT_EQ(v2[2], 2);
+    TVector<int> v3(5);
+    for (int i = 0; i < 5; ++i)
+    {
+        v1[i] = 2;
+        v2[i] = 1;
+        v3[i] = 1;
+    }
+    EXPECT_EQ(v1 - v2, v3);
 }
-
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
     TVector<int> v1(5);
@@ -203,10 +211,13 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
 {
     TVector<int> v1(5);
     TVector<int> v2(5);
-    v1[2] = 3;
-    v2[2] = 1;
+    for (int i = 0; i < 5; ++i)
+    {
+        v1[i] = 1;
+        v2[i] = 1;
+    }
     int a = v1 * v2;
-    EXPECT_EQ(a, 3);
+    EXPECT_EQ(a, 5);
    
 }
 
