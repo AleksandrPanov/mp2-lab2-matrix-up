@@ -9,7 +9,7 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
-    ASSERT_ANY_THROW(TMatrix<int>(static_cast<size_t>(TVector<int>::max_size + 1ull)));
+    ASSERT_ANY_THROW(TMatrix<int>((TVector<int>::max_size + 1ull)));
 }
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
@@ -49,8 +49,8 @@ TEST(TMatrix, can_get_size)
 TEST(TMatrix, can_set_and_get_element)
 {
     TMatrix<int> a(5);
-    a[0].setElement(3,7);
-    EXPECT_NE(7, a[0].getElement(3));
+    a[0][0] = 1;
+    EXPECT_NE(1, a[0][0]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)

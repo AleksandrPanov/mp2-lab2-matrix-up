@@ -69,7 +69,7 @@ public:
     }
 };
 template <class T>
-TVector<T>::TVector(){}
+TVector<T>::TVector() :size(0), startIndex(0), pVector(nullptr) {}
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
@@ -91,6 +91,11 @@ TVector<T>::TVector(int _size, int startIndex)
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
+    if (size >= max_size)
+    {
+        exception exp = bad_size;
+        throw exp;
+    }
     if (startIndex >= size )
     {
         exception exp = bad_startind;
@@ -306,7 +311,16 @@ void TVector<T>::setElement(int index, T element)
     }
     pVector[index] = element;
 }
-
+template <class T>
+void TVector<T>::setElement(size_t index, T element)
+{
+    if (index < 0 || index >= size - startIndex)
+    {
+        exception exp = bad_ind;
+        throw exp;
+    }
+    pVector[index] = element;
+}
 // Верхнетреугольная матрица
 // val1 val2 val3 ... valn-1 valn
 // 0    val2 val3 ... valn-1 valn
@@ -351,9 +365,17 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
     for (int i = 0; i < s; ++i)
     {
-       setElement(i,TVector<T>(s, i));
+        pVector[i] = TVector<T>(s, i);
     }
 } 
+template <class T>
+TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
+{
+    for (size_t i = 0; i < s; ++i)
+    {
+        pVector[i] = TVector<T>(s, i);
+    }
+}
 
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
