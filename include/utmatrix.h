@@ -444,7 +444,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
         exception exp = not_eq_size;
         throw exp;
     }
-    TMatrix<T>tmp(size);
+    TMatrix<T>tmp(*this);
     for (size_t i = 0; i < size; ++i)
     {
         tmp.pVector[i] = pVector[i] + mt.pVector[i];
@@ -460,11 +460,10 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
         exception exp = not_eq_size;
         throw exp;
     }
-    TMatrix<T>tmp(size);
+    TMatrix<T>tmp(*this);
     for (size_t i = 0; i < size; ++i)
     {
-        tmp.pVector[i] = pVector[i] - mt.pVector[i];
+        tmp.pVector[i] = pVector[i] + mt.pVector[i];
     }
     return tmp;
-
 } 

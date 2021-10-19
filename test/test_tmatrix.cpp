@@ -127,12 +127,7 @@ TEST(TMatrix, can_add_matrices_with_equal_size)
 {
     TMatrix<int> a(5);
     TMatrix<int> b(5);
-    a[0][0] = 1;
-    a[0][1] = 2;
-    b[0][0] = 1;
-    b[0][1] = 2;
-    a = a + b;
-    EXPECT_EQ(a[0][1], 4);
+    ASSERT_NO_THROW(a + b);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
@@ -146,12 +141,7 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
     TMatrix<int> a(5);
     TMatrix<int> b(5);
-    a[0][0] = 1;
-    a[0][1] = 2;
-    b[0][0] = 1;
-    b[0][1] = 2;
-    a = a - b;
-    EXPECT_EQ(a[0][0], 0);
+    ASSERT_NO_THROW(a-b);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
