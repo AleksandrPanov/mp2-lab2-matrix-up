@@ -10,8 +10,6 @@
 #include <limits>
 
 using namespace std;
-const int MAX_VECTOR_SIZE = 100000000;
-const int MAX_MATRIX_SIZE = 10000;
 
 // Шаблон вектора
 template <class T>
@@ -57,13 +55,13 @@ public:
     T operator*(const TVector& v);       // скалярное произведение
 
     // ввод-вывод
-    friend istream& operator>>(istream& in, TVector& v)
+    friend std::istream& operator>>(std::istream& in, TVector& v)
     {
         for (int i = 0; i < v.size; i++)
             in >> v.pVector[i];
         return in;
     }
-    friend ostream& operator<<(ostream& out, const TVector& v)
+    friend std::ostream& operator<<(std::ostream& out, const TVector& v)
     {
         for (int i = 0; i < v.size; i++)
             out << v.pVector[i] << ' ';
@@ -74,13 +72,14 @@ public:
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int s, int si)
 {
-    if ((s > MAX_VECTOR_SIZE) || (s < 1))
-        throw s;
-    if ((si > MAX_VECTOR_SIZE) || (si < 0))
-        throw si;
-    size = s;
-    startIndex = si;
-    pVector = new T[size];
+    if ((s < 0) || (si < 0)) throw "incorrect";
+    if (s > max_size) throw "incorrect";
+    else size = s;
+
+    if (si > max_size - size) throw "incorrect";
+    else this->startIndex = si;
+
+    if (s != 0) pVector = new T[s];
 }
 
 template <class T>//конструктор инициализации
@@ -308,20 +307,15 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s) : TVector<TVector<T> >(s)
 {
-    if ((s > MAX_MATRIX_SIZE) || (s < 1))
-        throw s;
-    for (int i = 0; i < s; i++)
-    {
-        TVector<T> t(s - i, i);
-        pVector[i] = t;
-    }
-} /*-------------------------------------------------------------------------*/
+    for (int i = 0; i < s; ++i)
+        TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
+}
 
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
 {
-    for (size_t i = 0; i < s; i++)
-        TVector<TVector<T>>::setElement(i, TVector<T>(s - i, i));
+    for (size_t i = 0; i < s; ++i)
+        TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
 }
 
 template <class T> // конструктор копирования

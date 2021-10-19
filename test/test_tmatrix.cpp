@@ -4,7 +4,7 @@
 
 TEST(TMatrix, can_create_matrix_with_positive_length)
 {
-    ASSERT_NO_THROW(TMatrix<int> m(5));
+    ASSERT_NO_THROW(TMatrix<int> a(5));
 }
 
 TEST(TMatrix, cant_create_too_large_matrix)
@@ -14,34 +14,35 @@ TEST(TMatrix, cant_create_too_large_matrix)
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
 {
-    ASSERT_ANY_THROW(TMatrix<int> m(-5));
+    ASSERT_ANY_THROW(TMatrix<int> a(-5));
 }
 
 TEST(TMatrix, can_create_copied_matrix)
 {
-    TMatrix<int> m(5);
-    ASSERT_NO_THROW(TMatrix<int> m1(m));
+    TMatrix<int> a(5);
+    ASSERT_NO_THROW(TMatrix<int> b(a));
 }
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
     TMatrix<int> a(5);
-    a[1][1] = 10;
-    EXPECT_EQ(TMatrix<int>(a)[1][1], 10);
+    TMatrix<int> b(a);
+    EXPECT_EQ(a, b);
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
     TMatrix<int> a(5);
     TMatrix<int> b(a);
-    a[1][1] = 10;
-    EXPECT_NE(b[1][1], a[1][1]);
+    a[1][1] = 8;
+    b[1][1] = 7;
+    EXPECT_NE(b, a);
 }
 
 TEST(TMatrix, can_get_size)
 {
     TMatrix<int> a(5);
-    EXPECT_EQ(5, a.getSize());
+    EXPECT_EQ(a.getSize(), 5);
 }
 
 TEST(TMatrix, can_set_and_get_element)
@@ -97,10 +98,9 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-    TMatrix<int> a(5);
-    a[1][1] = 1;
+    TMatrix<int> a(10);
     TMatrix<int> b(a);
-    EXPECT_EQ(b == a, true);
+    EXPECT_EQ(a, b);
 }
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
