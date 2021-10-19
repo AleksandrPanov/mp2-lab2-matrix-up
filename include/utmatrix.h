@@ -375,7 +375,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
     for (int i = 0; i < s; ++i)
     {
-        pVector[i] = TVector<T>(s, i);
+        TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
     }
 } 
 template <class T>
@@ -383,7 +383,7 @@ TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
 {
     for (size_t i = 0; i < s; ++i)
     {
-        pVector[i] = TVector<T>(s, i);
+        TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
     }
 }
 
