@@ -112,9 +112,9 @@ TEST(TVector, can_assign_vectors_of_different_size)
 
 TEST(TVector, compare_equal_vectors_return_true)
 {
-    TVector<int> v(15), m(15);
+    TVector<int> v(15);
     v[10] = 5;
-    m[10] = 5;
+    TVector<int> m = v;
     EXPECT_EQ(v == m, true);
 }
 

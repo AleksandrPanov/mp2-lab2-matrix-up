@@ -129,10 +129,7 @@ TEST(TMatrix, compare_equal_matrices_return_true)
     vec1[2] = 30;
     m.setElement(2, vec1);
 
-    TMatrix<int> n(5);
-    TVector<int> vec2(5, 2);
-    vec2[2] = 30;
-    n.setElement(2, vec2);
+    TMatrix<int> n = m;
     
     EXPECT_EQ(m == n, true);
 }
