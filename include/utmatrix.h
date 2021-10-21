@@ -165,7 +165,7 @@ T& TVector<T>::operator[](size_t pos)
 	{
 		throw "pos out of range";
 	}
-	return *pVector[pos - startIndex];
+	return pVector[pos - startIndex];
 }
 
 template <class T>
@@ -175,7 +175,7 @@ T TVector<T>::operator[](size_t pos) const
 	{
 		throw "pos out of range";
 	}
-	return *pVector[pos - startIndex];
+	return pVector[pos - startIndex];
 }
 
 template<class T>
@@ -185,7 +185,7 @@ T TVector<T>::operator[](int pos) const
 	{
 		throw "pos out of range";
 	}
-	return *pVector[pos - startIndex];
+	return pVector[pos - startIndex];
 }
 
 template <class T> // сравнение
@@ -512,19 +512,29 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-	for (int i = 0; i < mt.size; i++)
+	if (size != mt.size)
 	{
-		this->getElement(i) = this->getElement(i) + mt[i];
+		throw "Sizes are unequal";
 	}
-	return *this;
+	TMatrix<T> matrix(*this);
+	for (size_t i = 0; i < size; i++)
+	{
+		matrix.pVector[i] = matrix.pVector[i] + mt.pVector[i];
+	}
+	return matrix;
 }
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-	for (int i = 0; i < mt.size; i++)
+	if (size != mt.size)
 	{
-		this->getElement(i) = this->getElement(i) - mt[i];
+		throw "Sizes are unequal";
 	}
-	return *this;
+	TMatrix<T> matrix(*this);
+	for (size_t i = 0; i < size; i++)
+	{
+		matrix.pVector[i] = matrix.pVector[i] - mt.pVector[i];
+	}
+		return matrix;
 }
