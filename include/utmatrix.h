@@ -22,6 +22,7 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
+    TVector() {}
     TVector(int size, int startIndex = 0);       //конструктор инициализации
     TVector(size_t size = 0, size_t startIndex = 0); //конструктор инициализации
 
@@ -81,6 +82,8 @@ TVector<T>::TVector(int s, int si)
 
     if (s != 0) pVector = new T[s];
 }
+    pVector = new T[_size];
+} /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t s, size_t si)
@@ -238,6 +241,7 @@ T TVector<T>::operator*(const TVector<T>& v)
     T res = 0;
     for (size_t i = 0; i < size; i++) res += pVector[i] * v.pVector[i];
     return res;
+    return T();
 } /*-------------------------------------------------------------------------*/
 
 template <class T>

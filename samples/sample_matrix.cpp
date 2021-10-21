@@ -25,5 +25,6 @@ int main()
     std::cout << "Matrix a = " << std::endl << a << std::endl;
     std::cout << "Matrix b = " << std::endl << b << std::endl;
     std::cout << "Matrix c = a + b" << std::endl << c << std::endl;
+    return 0;
 }
 //---------------------------------------------------------------------------
