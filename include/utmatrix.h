@@ -191,7 +191,7 @@ TVector<T> TVector<T>::operator+(const TVector<T>& v)
         throw "Can't add vectors of different size/startIndex";
     TVector<T> tmp(*this);
     for (size_t i = 0; i < size - startIndex; i++)
-        tmp.pVector[i] += v.pVector[i];
+        tmp.pVector[i] = tmp.pVector[i] + v.pVector[i];
     return tmp;
 }
 
@@ -202,7 +202,7 @@ TVector<T> TVector<T>::operator-(const TVector<T>& v)
         throw "Can't sub vectors of different size/startIndex";
     TVector<T> tmp(*this);
     for (size_t i = 0; i < size - startIndex; i++)
-        tmp.pVector[i] -= v.pVector[i];
+        tmp.pVector[i] = tmp.pVector[i] - v.pVector[i];
     return tmp;
 }
 
@@ -249,11 +249,11 @@ public:
 
     TMatrix(const TMatrix &mt);               // копирование
     TMatrix(const TVector<TVector<T> > &mt);  // преобразование типа
-    bool operator==(const TMatrix &mt) const; // сравнение
-    bool operator!=(const TMatrix &mt) const; // сравнение
-    TMatrix& operator= (const TMatrix &mt);   // присваивание
-    TMatrix operator+ (const TMatrix &mt);    // сложение
-    TMatrix operator- (const TMatrix &mt);    // вычитание
+    //bool operator==(const TMatrix &mt) const; // сравнение
+    //bool operator!=(const TMatrix &mt) const; // сравнение
+    //TMatrix& operator= (const TMatrix &mt);   // присваивание
+    //TMatrix operator+ (const TMatrix &mt);    // сложение
+    //TMatrix operator- (const TMatrix &mt);    // вычитание
 
     // ввод / вывод
     friend std::istream& operator>>(std::istream &in, TMatrix &mt)
@@ -278,7 +278,7 @@ TMatrix<T>::TMatrix(int s) : TVector<TVector<T>>(s)
     {
         TMatrix<T>::pVector[i] = TVector<T>(s, i);
     }
-}
+};
 
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
@@ -287,67 +287,67 @@ TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
     {
         TMatrix<T>::pVector[i] = TVector<T>(s, i);
     }
-}
+};
 
 
 template <class T> // конструктор копирования
-TMatrix<T>::TMatrix(const TMatrix<T> &mt):
-  TVector<TVector<T> >(mt) {}
+TMatrix<T>::TMatrix(const TMatrix<T>& mt) :
+    TVector<TVector<T> >(mt) {};
 
 template <class T> // конструктор преобразования типа
-TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
-  TVector<TVector<T> >(mt) {}
+TMatrix<T>::TMatrix(const TVector<TVector<T> >& mt) :
+    TVector<TVector<T> >(mt) {};
 
-template <class T> // сравнение
-bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
-{
-    if (size != mt.size) return false;
-    for (size_t i = 0; i < size; i++)
-        if (pVector[i] != mt.pVector[i]) return false;
-    return true;
-}
-
-template <class T> // сравнение
-bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
-{
-    if (size != mt.size) return true;
-    for (size_t i = 0; i < size; i++)
-        if (pVector[i] != mt.pVector[i]) return true;
-    return false;
-} 
-
-template <class T> // присваивание
-TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
-{
-    if (this != &mt) {
-        size = mt.size;
-        if (pVector != nullptr) delete[] pVector;
-        pVector = new TVector<T>[size];
-        for (size_t i = 0; i < size; i++) {
-            pVector[i] = mt.pVector[i];
-        }
-    }
-    return *this;
-} 
-
-template <class T> // сложение
-TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
-{
-    if (size != mt.size)
-        throw "Can't add matrixes of different size";
-    TMatrix<T> tmp(*this);
-    for (size_t i = 0; i < size; i++)
-        tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
-    return tmp;
-} 
-
-template <class T> // вычитание
-TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
-{
-    if (size != mt.size)
-        throw "Can't sub matrixes of different size";
-    TMatrix<T> tmp(*this);
-    for (size_t i = 0; i < size; i++)
-        tmp.pVector[i] = tmp.pVector[i] - mt.pVector[i];
-    return tmp;
-} 
+//template <class T> // сравнение
+//bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
+//{
+//    if (size != mt.size) return false;
+//    for (size_t i = 0; i < size; i++)
+//        if (pVector[i] != mt.pVector[i]) return false;
+//    return true;
+//}
+//
+//template <class T> // сравнение
+//bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
+//{
+//    if (size != mt.size) return true;
+//    for (size_t i = 0; i < size; i++)
+//        if (pVector[i] != mt.pVector[i]) return true;
+//    return false;
+//} 
+//
+//template <class T> // присваивание
+//TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
+//{
+//    if (this != &mt) {
+//        size = mt.size;
+//        if (pVector != nullptr) delete[] pVector;
+//        pVector = new TVector<T>[size];
+//        for (size_t i = 0; i < size; i++) {
+//            pVector[i] = mt.pVector[i];
+//        }
+//    }
+//    return *this;
+//} 
+//
+//template <class T> // сложение
+//TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
+//{
+//    if (size != mt.size)
+//        throw "Can't add matrixes of different size";
+//    TMatrix<T> tmp(*this);
+//    for (size_t i = 0; i < size; i++)
+//        tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
+//    return tmp;
+//} 
+//
+//template <class T> // вычитание
+//TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
+//{
+//    if (size != mt.size)
+//        throw "Can't sub matrixes of different size";
+//    TMatrix<T> tmp(*this);
+//    for (size_t i = 0; i < size; i++)
+//        tmp.pVector[i] = tmp.pVector[i] - mt.pVector[i];
+//    return tmp;
+//} 
