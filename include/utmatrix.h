@@ -76,6 +76,52 @@ public:
 		}
 		return out;
 	}
+
+    static const size_t max_size = std::numeric_limits<unsigned int>::max();
+
+    TVector() {}
+    TVector(int size, int startIndex = 0);       //конструктор инициализации
+    TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
+
+    template <class TSize, class TStartIndex>
+    TVector(TSize size, TStartIndex startIndex) = delete;
+
+    TVector(const TVector &v);                // конструктор копирования
+    ~TVector();
+    size_t getSize()      { return size;       } // размер вектора
+    size_t getStartIndex(){ return startIndex; } // индекс первого элемента
+    T& getElement(int i);
+    T& getElement(size_t i);
+    void setElement(int index, T element);
+    void setElement(size_t index, T element);
+
+    T& operator[](int pos);                  // доступ
+    T& operator[](size_t pos);               // доступ
+    bool operator==(const TVector &v) const; // сравнение
+    bool operator!=(const TVector &v) const; // сравнение
+    TVector& operator=(const TVector &v);    // присваивание
+
+
+    // скалярные операции
+    TVector operator+(const T &val); // прибавить скаляр
+    TVector operator-(const T &val); // вычесть скаляр
+    TVector operator*(const T &val); // умножить на скаляр
+
+    // векторные операции
+    TVector operator+(const TVector &v); // сложение
+    TVector operator-(const TVector &v); // вычитание
+    T operator*(const TVector &v);       // скалярное произведение
+
+    // ввод-вывод
+    friend std::istream& operator>>(std::istream &in, TVector &v)
+    {
+        return in;
+    }
+    friend std::ostream& operator<<(std::ostream &out, const TVector &v)
+    {
+        return out;
+    }
+
 };
 
 template<class T>
@@ -86,6 +132,7 @@ TVector<T>::TVector() :size(0), startIndex(0), pVector(nullptr)
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
+
 	if (_size < 0 || startIndex < 0 || _size > max_size || startIndex > max_size - size)
 	{
 		throw "_size or startIndex out of range";
@@ -101,6 +148,10 @@ TVector<T>::TVector(int _size, int startIndex)
 		pVector = new T[_size];
 	}
 }
+
+    pVector = new T[_size];
+} /*-------------------------------------------------------------------------*/
+
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
@@ -324,6 +375,7 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T> &v)
 {
+
 	if (size != v.size || startIndex != v.startIndex)
 	{
 		throw "sizes or startIndexes are unequal";
@@ -335,6 +387,8 @@ T TVector<T>::operator*(const TVector<T> &v)
 	}
 	return result;
 }
+    return T();
+} 
 
 template <class T>
 T& TVector<T>::getElement(int index) const
