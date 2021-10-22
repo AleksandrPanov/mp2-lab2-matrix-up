@@ -27,9 +27,9 @@ public:
 	template <class TSize, class TStartIndex>
 	TVector(TSize size, TStartIndex startIndex) = delete;
 
-	TVector(const TVector& v);                // конструктор копирования
+	TVector(const TVector& v);                          // конструктор копирования
 	~TVector();
-	size_t getSize() const { return size; } // размер вектора
+	size_t getSize() const { return size; }             // размер вектора
 	size_t getStartIndex() const { return startIndex; } // индекс первого элемента
 	T& getElement(int i) const;
 	T& getElement(size_t i) const;
@@ -38,8 +38,6 @@ public:
 
 	T& operator[] (int pos);                  // доступ
 	T& operator[] (size_t pos);               // доступ
-	T operator[] (size_t pos) const;
-	T operator[] (int pos) const;
 	bool operator==(const TVector& v) const; // сравнение
 	bool operator!=(const TVector& v) const; // сравнение
 	TVector& operator=(const TVector& v);    // присваивание
@@ -79,8 +77,11 @@ public:
 };
 
 template<class T>
-TVector<T>::TVector() :size(0), startIndex(0), pVector(nullptr)
+TVector<T>::TVector()
 {
+	pVector = nullptr;
+	size = 0;
+	startIndex = 0;
 }
 
 template <class T>//конструктор инициализации
@@ -160,26 +161,6 @@ T& TVector<T>::operator[](int pos)
 
 template <class T> // доступ
 T& TVector<T>::operator[](size_t pos)
-{
-	if (pos - startIndex >= max_size)
-	{
-		throw "pos out of range";
-	}
-	return pVector[pos - startIndex];
-}
-
-template <class T>
-T TVector<T>::operator[](size_t pos) const
-{
-	if (pos - startIndex < 0 || pos - startIndex >= max_size)
-	{
-		throw "pos out of range";
-	}
-	return pVector[pos - startIndex];
-}
-
-template<class T>
-T TVector<T>::operator[](int pos) const
 {
 	if (pos - startIndex >= max_size)
 	{
@@ -424,7 +405,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 	}
 	for (int i = 0; i < s; i++)
 	{
-		TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
+		TMatrix<T>::pVector[i] = TVector<T>(s, i);
 	}
 }
 
@@ -437,7 +418,7 @@ TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 	}
 	for (size_t i = 0; i < s; i++)
 	{
-		TVector<TVector<T>>::pVector[i] = TVector<T>(static_cast<size_t>(s), i);
+		TMatrix<T>::pVector[i] = TVector<T>(s, i);
 	}
 }
 
