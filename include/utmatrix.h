@@ -14,7 +14,7 @@ template <class T>
 class TVector
 {
 protected:
-	T *pVector;
+	T* pVector;
 	size_t size;       // размер вектора
 	size_t startIndex; // индекс первого элемента вектора
 public:
@@ -102,7 +102,6 @@ TVector<T>::TVector(int _size, int startIndex)
 		pVector = new T[_size];
 	}
 }
-
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
