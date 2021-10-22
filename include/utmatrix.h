@@ -102,6 +102,7 @@ TVector<T>::TVector(int _size, int startIndex)
 		pVector = new T[_size];
 	}
 }
+
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
