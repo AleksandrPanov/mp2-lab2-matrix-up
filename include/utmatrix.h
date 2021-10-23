@@ -193,13 +193,13 @@ bool TVector<T>::operator!=(const TVector &v) const
 {
 	if (this == &v)
 	{
-		return true;
+		return false;
 	}
-	if (startIndex != v.startIndex || size != v.size)
+	if (size != v.size || startIndex != v.startIndex)
 	{
 		return true;
 	}
-	for (int i = 0; i < size - startIndex; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		if (pVector[i] != v.pVector[i])
 		{
@@ -431,7 +431,7 @@ bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 	{
 		return false;
 	}
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		if (pVector[i] != mt.pVector[i])
 		{
@@ -452,7 +452,7 @@ bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 	{
 		return true;
 	}
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		if (pVector[i] != mt.pVector[i])
 		{
@@ -475,7 +475,7 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 		delete[] pVector;
 	}
 	pVector = new TVector<T>[size];
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		pVector[i] = mt.pVector[i];
 	}
@@ -509,5 +509,5 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 	{
 		matrix.pVector[i] = matrix.pVector[i] - mt.pVector[i];
 	}
-		return matrix;
+	return matrix;
 }
