@@ -56,7 +56,7 @@ public:
 	// ввод-вывод
 	friend std::istream& operator>>(std::istream& in, TVector& v)
 	{
-		for (size_t i = v.getStartIndex(); i < v.getSize; i++)
+		for (size_t i = v.getStartIndex(); i < v.size - v.startIndex; i++)
 		{
 			in >> v.pVector[i];
 		}
@@ -64,11 +64,7 @@ public:
 	}
 	friend std::ostream& operator<<(std::ostream& out, const TVector& v)
 	{
-		for (size_t i = 0; i < v.startIndex; i++)
-		{
-			out << 0 << " ";
-		}
-		for (size_t i = 0; i < v.size; i++)
+		for (size_t i = 0; i < v.size - v.startIndex; i++)
 		{
 			out << v.pVector[i] << " ";
 		}
@@ -85,45 +81,43 @@ TVector<T>::TVector()
 }
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(int _size, int startIndex)
+TVector<T>::TVector(int _size, int _startIndex)
 {
-	if (_size < 0 || startIndex < 0 || _size > max_size || startIndex > max_size - size)
+	if (_size < 0 || _size > max_size || _startIndex < 0 || _startIndex >= _size)
 	{
-		throw "_size or startIndex out of range";
+		throw "_size or _startIndex out of range";
 	}
-	this->size = _size;
-	this->startIndex = startIndex;
+	size = _size;
+	startIndex = _startIndex;
 	if (size == 0)
 	{
 		pVector = nullptr;
 	}
 	else
 	{
-		pVector = new T[_size];
+		pVector = new T[size - startIndex];
 	}
 }
-
 template <class T>//конструктор инициализации
-TVector<T>::TVector(size_t _size, size_t startIndex)
+TVector<T>::TVector(size_t _size, size_t _startIndex)
 {
-	if (_size > max_size || startIndex > max_size - size)
+	if (_size > max_size || _startIndex >= _size)
 	{
-		throw "_size or startIndex out of range";
+		throw "_size or _startIndex out of range";
 	}
-	this->size = _size;
-	this->startIndex = startIndex;
+	size = _size;
+	startIndex = _startIndex;
 	if (size == 0)
 	{
 		pVector = nullptr;
 	}
 	else
 	{
-		pVector = new T[_size];
+		pVector = new T[size - startIndex];
 	}
 }
-
 template <class T> //конструктор копирования
-TVector<T>::TVector(const TVector<T>& v):size(0), startIndex(0), pVector(nullptr)
+TVector<T>::TVector(const TVector<T>& v)
 {
 	if (v != *this)
 	{
@@ -132,12 +126,15 @@ TVector<T>::TVector(const TVector<T>& v):size(0), startIndex(0), pVector(nullptr
 		if (size != 0)
 		{
 			pVector = new T[size];
-			for (size_t i = 0; i < size; i++)
+			for (size_t i = 0; i < size - startIndex; i++)
 			{
 				pVector[i] = v.pVector[i];
 			}
 		}
-		else { pVector = nullptr; }
+		else 
+		{ 
+			pVector = nullptr;
+		}
 	}
 }
 
@@ -152,7 +149,7 @@ TVector<T>::~TVector()
 template <class T> // доступ
 T& TVector<T>::operator[](int pos)
 {
-	if (pos - startIndex < 0 || pos - startIndex >= max_size)
+	if (pos - startIndex < 0 || pos >= size)
 	{
 		throw "pos out of range";
 	}
@@ -162,7 +159,7 @@ T& TVector<T>::operator[](int pos)
 template <class T> // доступ
 T& TVector<T>::operator[](size_t pos)
 {
-	if (pos - startIndex >= max_size)
+	if (pos >= size)
 	{
 		throw "pos out of range";
 	}
@@ -227,13 +224,13 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
 	startIndex = v.startIndex;
 	if (size != 0)
 	{
-		pVector = new T[size];
+		pVector = new T[size - startIndex];
 	}
 	else
 	{
 		pVector = nullptr;
 	}
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		pVector[i] = v.pVector[i];
 	}
@@ -244,7 +241,7 @@ template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
 	TVector<T> vec(*this);
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		vec.pVector[i] += val;
 	}
@@ -255,7 +252,7 @@ template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
 	TVector<T> vec(*this);
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		vec.pVector[i] -= val;
 	}
@@ -266,7 +263,7 @@ template <class T> // умножить на скаляр
 TVector<T> TVector<T>::operator*(const T &val)
 {
 	TVector<T> vec(*this);
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		vec.pVector[i] *= val;
 	}
@@ -280,7 +277,7 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
 		throw "sizes or startIndexes are unequal";
 	}
 	TVector<T> vec(*this);
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		vec.pVector[i] = vec.pVector[i] + v.pVector[i];
 	}
@@ -295,7 +292,7 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 		throw "sizes or startIndexes are unequal";
 	}
 	TVector<T> vec(*this);
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		vec.pVector[i] = vec.pVector[i] - v.pVector[i];
 	}
@@ -310,7 +307,7 @@ T TVector<T>::operator*(const TVector<T> &v)
 		throw "sizes or startIndexes are unequal";
 	}
 	T result = 0;
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size - startIndex; i++)
 	{
 		result += pVector[i] * v.pVector[i];
 	}
@@ -408,7 +405,6 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 		TMatrix<T>::pVector[i] = TVector<T>(s, i);
 	}
 }
-
 template<class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 {
@@ -421,8 +417,6 @@ TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 		TMatrix<T>::pVector[i] = TVector<T>(s, i);
 	}
 }
-
-
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt) :
 	TVector<TVector<T> >(mt) {}
