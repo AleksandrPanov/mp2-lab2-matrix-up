@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <limits>
+#include <cmath>
 
 // Шаблон вектора
 template <class T>
@@ -360,7 +361,7 @@ void TVector<T>::setElement(size_t index, T element)
 // ..............................
 // 0    0    0    ... 0      valn 
 template <class T>
-class TMatrix : public TVector<TVector<T> >
+class TMatrix : public TVector<TVector<T>>
 {
 public:
 	TMatrix(int s);
@@ -394,7 +395,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
-	if ((static_cast<unsigned long long>(s * s) > max_size) || (s < 0))
+	if (s < 0)
 	{
 		throw "size out of range";
 	}
@@ -406,10 +407,6 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 template<class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 {
-	if (static_cast<unsigned long long>(s * s) > max_size)
-	{
-		throw "size out of range";
-	}
 	for (size_t i = 0; i < s; i++)
 	{
 		TMatrix<T>::pVector[i] = TVector<T>(s, i);
@@ -434,7 +431,7 @@ bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 	{
 		return false;
 	}
-	for (int i = 0; i < mt.size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (pVector[i] != mt.pVector[i])
 		{
@@ -455,7 +452,7 @@ bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 	{
 		return true;
 	}
-	for (int i = 0; i < mt.size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (pVector[i] != mt.pVector[i])
 		{
