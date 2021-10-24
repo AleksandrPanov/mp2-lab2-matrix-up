@@ -1,4 +1,4 @@
-﻿#include <gtest.h>
+#include <gtest.h>
 #include "utmatrix.h"
 
 TEST(TVector, can_create_vector_with_positive_length)
@@ -8,7 +8,7 @@ TEST(TVector, can_create_vector_with_positive_length)
 
 TEST(TVector, cant_create_too_large_vector)
 {
-    // ������������ ���������� ������ ������� = TVector<int>::max_size
+    // ìàêñèìàëüíûé äîïóñòèìûé ðàçìåð âåêòîðà = TVector<int>::max_size
     ASSERT_ANY_THROW(TVector<int> v(TVector<int>::max_size + static_cast<size_t>(1)));
 }
 
