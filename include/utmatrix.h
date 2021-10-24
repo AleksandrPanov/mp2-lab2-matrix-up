@@ -20,8 +20,7 @@ protected:
     size_t startIndex; // индекс первого элемента вектора
 public:
     static const size_t max_size = std::numeric_limits<int>::max();
-
-	TVector();//конструктор по умолчанию
+    TVector() {}
     TVector(int size, int startIndex = 0);       //конструктор инициализации
 	TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
 
