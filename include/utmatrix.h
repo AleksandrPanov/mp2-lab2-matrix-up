@@ -1,4 +1,4 @@
-﻿// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
+// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
 //
 // utmatrix.h - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
@@ -8,8 +8,6 @@
 
 #include <iostream>
 #include <limits>
-
-using namespace std;
 
 // Шаблон вектора
 template <class T>
@@ -22,7 +20,6 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
-    TVector() {}
     TVector(int size, int startIndex = 0);       //конструктор инициализации
     TVector(size_t size = 0, size_t startIndex = 0); //конструктор инициализации
 
@@ -58,43 +55,44 @@ public:
     // ввод-вывод
     friend std::istream& operator>>(std::istream& in, TVector& v)
     {
-        for (int i = 0; i < v.size; i++)
+        for (size_t i = 0; i < v.size; i++)
             in >> v.pVector[i];
         return in;
     }
     friend std::ostream& operator<<(std::ostream& out, const TVector& v)
     {
-        for (int i = 0; i < v.size; i++)
-            out << v.pVector[i] << ' ';
+        for (size_t i = 0; i < v.startIndex; i++)
+            out << 0 << " ";
+        for (size_t i = 0; i < v.size; i++)
+            out << v.pVector[i] << " ";
         return out;
     }
 };
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(int s, int si)
+TVector<T>::TVector(int _size, int startIndex)
 {
-    if ((s < 0) || (si < 0)) throw "incorrect";
-    if (s > max_size) throw "incorrect";
-    else size = s;
+    if ((_size < 0) || (startIndex < 0)) throw "incorrect";
 
-    if (si > max_size - size) throw "incorrect";
-    else this->startIndex = si;
+    if (_size > max_size) throw "incorrect";
+    else size = _size;
 
-    if (s != 0) pVector = new T[s];
+    if (startIndex > max_size - size) throw "startIndex out of range";
+    else this->startIndex = startIndex;
+
+    if (_size != 0) pVector = new T[_size];
 }
-    pVector = new T[_size];
-} /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(size_t s, size_t si)
+TVector<T>::TVector(size_t _size, size_t startIndex)
 {
-    if (s > max_size) throw "incorrect";
-    else size = s;
+    if (_size > max_size) throw "incorrect";
+    else size = _size;
 
-    if (si > max_size - size) throw "incorrect";
-    else this->startIndex = si;
+    if (startIndex > max_size - size) throw "incorrect";
+    else this->startIndex = startIndex;
 
-    if (s != 0) pVector = new T[s];
+    if (_size != 0) pVector = new T[_size];
     else pVector = nullptr;
 }
 
@@ -135,7 +133,7 @@ T& TVector<T>::operator[](size_t pos)
 template <class T> // сравнение
 bool TVector<T>::operator==(const TVector& v) const
 {
-    if (this == &v) 
+    if (this == &v)
         return true;
     if ((size != v.size) || (startIndex != v.startIndex))
         return false;
@@ -284,26 +282,21 @@ public:
     template <class TSize>
     TMatrix(TSize size) = delete;
 
-
     TMatrix(const TMatrix& mt);               // копирование
     TMatrix(const TVector<TVector<T> >& mt);  // преобразование типа
-    //bool operator==(const TMatrix &mt) const; // сравнение
-    //bool operator!=(const TMatrix &mt) const; // сравнение
-    //TMatrix& operator= (const TMatrix &mt);   // присваивание
-    //TMatrix operator+ (const TMatrix &mt);    // сложение
-    //TMatrix operator- (const TMatrix &mt);    // вычитание
+
 
     // ввод / вывод
-    friend istream& operator>>(istream& in, TMatrix& mt)
+    friend std::istream& operator>>(std::istream& in, TMatrix& mt)
     {
         for (int i = 0; i < mt.size; i++)
             in >> mt.pVector[i];
         return in;
     }
-    friend ostream& operator<<(ostream& out, const TMatrix& mt)
+    friend std::ostream& operator<<(std::ostream& out, const TMatrix& mt)
     {
         for (int i = 0; i < mt.size; i++)
-            out << mt.pVector[i] << endl;
+            out << mt.pVector[i] << std::endl;
         return out;
     }
 };
@@ -328,7 +321,7 @@ TMatrix<T>::TMatrix(const TMatrix<T>& mt) :
 
 template <class T> // конструктор преобразования типа
 TMatrix<T>::TMatrix(const TVector<TVector<T> >& mt) :
-    TVector<TVector<T> >(mt) {}
+    TVector<TVector<T> >(mt) {};
 
 /*template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
