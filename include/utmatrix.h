@@ -418,7 +418,7 @@ TMatrix<T>::TMatrix(const TMatrix<T> &mt) :
 
 template <class T> // конструктор преобразования типа
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt) :
-	TVector<TVector<T> >(mt) {}
+	TVector<TVector<T> >(mt) {};
 
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
