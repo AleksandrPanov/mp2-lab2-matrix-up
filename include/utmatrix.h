@@ -292,7 +292,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
-    if (s * s > this->max_size) throw -1;
+    if ((unsigned long long)s*s > this->max_size) throw -1;
     for (size_t i = 0; i < s; i++)
         this->pVector[i] = TVector<T>((size_t)s, i);
 } /*-------------------------------------------------------------------------*/
@@ -300,7 +300,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 {
-    if (s * s > this->max_size) throw - 1; 
+    if ((unsigned long long)s*s > this->max_size) throw - 1;
     for (size_t i = 0; i < s; i++)
         this->pVector[i] = TVector<T>(s, i);
 } /*-------------------------------------------------------------------------*/
