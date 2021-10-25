@@ -331,8 +331,8 @@ public:
     TMatrix(int s);
     TMatrix(size_t s);
 
-    template <class TSize>
-    TMatrix(TSize size) = delete;
+  /*  template <class TSize>*/
+    /*TMatrix(TSize size) = delete;*/
 
     TMatrix(const TMatrix &mt);               // копирование
     /*TMatrix(const TVector<TVector<T> > &mt); */ // преобразование типа
