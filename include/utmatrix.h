@@ -10,7 +10,6 @@
 #include <limits>
 
 // Шаблон вектора
-enum exception{out_of_range,bad_startind,bad_ind,bad_size,not_eq_size,not_eq_start_ind};
 template <class T>
 class TVector
 {
@@ -75,13 +74,11 @@ TVector<T>::TVector(int _size, int startIndex)
 {
     if(size<0)
     {
-        exception exp = bad_size;
-        throw exp;
+        throw "exp";
     }
     if (startIndex>=size||startIndex<0)
     {
-        exception exp = bad_startind;
-        throw exp;
+        throw "exp";
     }
     size = _size;
     this->startIndex = startIndex;
@@ -93,13 +90,11 @@ TVector<T>::TVector(size_t _size, size_t startIndex)
 {
     if (size >= max_size)
     {
-        exception exp = bad_size;
-        throw exp;
+        throw "exp";
     }
     if (startIndex >= size || startIndex<0 )
     {
-        exception exp = bad_startind;
-        throw exp;
+        throw "exp";
     }
     size = _size;
     this->startIndex = startIndex;
@@ -107,12 +102,12 @@ TVector<T>::TVector(size_t _size, size_t startIndex)
 } 
 
 template <class T> //конструктор копирования
-TVector<T>::TVector(const TVector<T> &v)
+TVector<T>::TVector(const TVector<T>& v)
 {
     size = v.getSize();
     startIndex = v.getStartIndex();
-    pVector = new T[size-startIndex];
-    std::copy(v.pVector, v.pVector + size-startIndex, pVector);
+    pVector = new T[size - startIndex];
+    std::copy(v.pVector, v.pVector + size - startIndex, pVector);
 } 
 
 template <class T> //деструктор
@@ -126,8 +121,7 @@ T& TVector<T>::operator[](int pos)
 {
     if (pos >= size || pos < 0 || pos<startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
+        throw "exp";
     
     }
     return pVector[pos-startIndex];
@@ -138,9 +132,7 @@ T& TVector<T>::operator[](size_t pos)
 {
     if (pos >= size || pos < startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
-
+        throw "exp";
     }
     return pVector[pos - startIndex];
 } 
@@ -180,11 +172,9 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
     if (this != &v) {
         size = v.getSize();
         startIndex = v.getStartIndex();
-        if (pVector != nullptr) {
-            delete[] pVector;
-        }
+        delete[] pVector;
         pVector = new T[size - startIndex];
-        std::copy(v.pVector, v.pVector + size, pVector);
+        std::copy(v.pVector, v.pVector + size - startIndex, pVector);
     }
     return *this;
 } 
@@ -234,13 +224,11 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
     if (size != v.getSize())
     {
-        exception exp = not_eq_size;
-        throw exp;
+        throw "exp";
     }
     if (startIndex != v.getStartIndex())
     {
-        exception exp = not_eq_start_ind;
-        throw exp;
+        throw "exp";
     }
     TVector<T> tmp(*this);
 
@@ -257,13 +245,11 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
     if (size != v.getSize())
     {
-        exception exp = not_eq_size;
-        throw exp;
+        throw "exp";
     }
     if (startIndex != v.getStartIndex())
     {
-        exception exp = not_eq_start_ind;
-        throw exp;
+        throw "exp";
     }
     TVector<T> tmp(*this);
 
@@ -276,33 +262,30 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 } 
 
 template <class T> // скалярное произведение
-T TVector<T>::operator*(const TVector<T> &v)
+T TVector<T>::operator*(const TVector<T>& v)
 {
     if (size != v.getSize())
     {
-        exception exp = not_eq_size;
-        throw exp;
+        throw "exp";
+        if (startIndex != v.getStartIndex())
+        {
+            throw "exp";
+        }
+        T tmp = 0;
+        for (size_t i = 0; i < size - startIndex; ++i)
+        {
+            tmp += pVector[i] * v.pVector[i];
+        }
+        return tmp;
     }
-    if (startIndex != v.getStartIndex())
-    {
-        exception exp = not_eq_start_ind;
-        throw exp;
-    }
-    T tmp=0;
-    for (size_t i=0; i < size-startIndex; ++i)
-    {
-        tmp += pVector[i]*v.pVector[i];
-    }
-    return tmp;
-} 
+}
 
 template <class T>
 T& TVector<T>::getElement(int index) const
 {
     if (index < 0 || index >= size - startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
+        throw "exp";
 }
     return pVector[index];
 }
@@ -311,8 +294,7 @@ T& TVector<T>::getElement(size_t index) const
 {
     if ( index >= size - startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
+        throw "exp";
     }
     return pVector[index];
 }
@@ -322,8 +304,7 @@ void TVector<T>::setElement(int index, T element)
 {
     if (index < 0 || index >= size - startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
+        throw "exp";
     }
     pVector[index] = element;
 }
@@ -332,8 +313,7 @@ void TVector<T>::setElement(size_t index, T element)
 {
     if (index < 0 || index >= size - startIndex)
     {
-        exception exp = bad_ind;
-        throw exp;
+        throw "exp";
     }
     pVector[index] = element;
 }
@@ -435,9 +415,8 @@ template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
     if (this != &mt) {
-        size = mt.getSize();
-        if (pVector!=nullptr) 
-        { delete[] pVector; }
+        size = mt.getSize(); 
+        delete[] pVector; 
         pVector = new TVector<T>[size];
         for (size_t i = 0; i < size; ++i)
         {
@@ -452,15 +431,13 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
     if (size != mt.getSize())
     {
-        exception exp = not_eq_size;
-        throw exp;
+        throw "exp";
     }
-    TMatrix<T>tmp(size);
-    for (int i = 0; i < size; ++i)
+    for (int i = 0; i < mt.getSize(); ++i)
     {
-        tmp.pVector[i] = pVector[i] + mt.pVector[i];
+        getElement(i) = getElement(i) + mt.pVector[i];
     }
-    return tmp;
+    return *this;
 } 
 
 template <class T> // вычитание
@@ -468,13 +445,11 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
     if (size != mt.getSize())
     {
-        exception exp = not_eq_size;
-        throw exp;
+        throw "exp";
     }
-    TMatrix<T>tmp(size);
-    for (size_t i = 0; i < size; ++i)
+    for (int i = 0; i < mt.getSize(); ++i)
     {
-        tmp.pVector[i] = this->pVector[i] - mt.pVector[i];
+        getElement(i) = getElement(i)- mt.pVector[i];
     }
-    return tmp;
+    return *this;
 } 
