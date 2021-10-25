@@ -72,6 +72,7 @@ TVector<T>::TVector() :size(0), startIndex(0), pVector(nullptr) {}
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
+
     if(size<0)
     {
         throw "exp";
@@ -264,6 +265,7 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T>& v)
 {
+
     if (size != v.getSize())
     {
         throw "exp";
@@ -279,7 +281,6 @@ T TVector<T>::operator*(const TVector<T>& v)
         return tmp;
     }
 }
-
 template <class T>
 T& TVector<T>::getElement(int index) const
 {
