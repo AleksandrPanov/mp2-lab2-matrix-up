@@ -270,7 +270,6 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T>& v)
 {
-
     if (size != v.getSize())
     {
         throw "exp";
@@ -365,6 +364,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
+    if (static_cast<size_t>(s * s) > max_size) throw "exp";
     for (int i = 0; i < s; ++i)
     {
         TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
@@ -373,6 +373,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
 {
+    if (static_cast<size_t>(s * s) > max_size) throw "exp";
     for (size_t i = 0; i < s; ++i)
     {
         TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
