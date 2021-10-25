@@ -67,8 +67,13 @@ public:
         return out;
     }
 };
-template <class T>
-TVector<T>::TVector() :size(0), startIndex(0), pVector(nullptr) {}
+template<class T>
+TVector<T>::TVector()
+{  
+    startIndex = 0;
+    pVector = nullptr;
+    size = 0;
+}
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
@@ -331,11 +336,11 @@ public:
     TMatrix(int s);
     TMatrix(size_t s);
 
-  /*  template <class TSize>*/
-    /*TMatrix(TSize size) = delete;*/
+    template <class TSize>
+    TMatrix(TSize size) = delete;
 
     TMatrix(const TMatrix &mt);               // копирование
-    /*TMatrix(const TVector<TVector<T> > &mt); */ // преобразование типа
+    TMatrix(const TVector<TVector<T> > &mt);  // преобразование типа
     //bool operator==(const TMatrix &mt) const; // сравнение
     //bool operator!=(const TMatrix &mt) const; // сравнение
     //TMatrix& operator= (const TMatrix &mt);   // присваивание
@@ -378,9 +383,9 @@ template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
   TVector<TVector<T> >(mt) {}
 
-//template <class T> // конструктор преобразования типа
-//TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
-//  TVector<TVector<T> >(mt) {}
+template <class T> // конструктор преобразования типа
+TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
+  TVector<TVector<T> >(mt) {}
 
 /*template <class T>*/ // сравнение
 //bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
