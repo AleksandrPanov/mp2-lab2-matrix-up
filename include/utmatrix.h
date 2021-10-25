@@ -21,7 +21,7 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
-    TVector<T>::TVector();
+    TVector() {}
     TVector(int size, int startIndex = 0);       //конструктор инициализации
     TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
 
@@ -74,9 +74,7 @@ public:
 };
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector() : TVector(10)
-{
-}
+TVector<T>::TVector() : TVector(10) {}
 
 
 template <class T>//конструктор инициализации
