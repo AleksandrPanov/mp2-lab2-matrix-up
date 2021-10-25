@@ -21,7 +21,7 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
-    TVector() {}
+    TVector();
     TVector(int size, int startIndex = 0);       //конструктор инициализации
     TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
 
@@ -292,14 +292,14 @@ template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
     for (size_t i = 0; i < s; i++)
-        pVector[i] = TVector<T>((size_t)s, i);
+        this->pVector[i] = TVector<T>((size_t)s, i);
 } /*-------------------------------------------------------------------------*/
 
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 {
     for (size_t i = 0; i < s; i++)
-        pVector[i] = TVector<T>(s, i);
+        this->pVector[i] = TVector<T>(s, i);
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // конструктор копирования
@@ -313,10 +313,10 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
-    if (size != mt.size) return false;
+    if (this->size != mt.size) return false;
 
-    for (int i = 0; i < size; i++)
-        if (pVector[i] != mt.pVector[i]) return false;
+    for (int i = 0; i < this->size; i++)
+        if (this->pVector[i] != mt.pVector[i]) return false;
 
     return true;
 } /*-------------------------------------------------------------------------*/
@@ -333,10 +333,10 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
     if (*this == mt)
         return *this;
 
-    size = mt.size;
+    this->size = mt.size;
 
     TMatrix newMatrix(mt);
-    std::swap(pVector, newMatrix.pVector);
+    std::swap(this->pVector, newMatrix.pVector);
 
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -345,12 +345,12 @@ template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
 
-    if (size != mt.size) throw - 1;
+    if (this->size != mt.size) throw - 1;
 
-    TMatrix res(size);
+    TMatrix res(this->size);
 
-    for (int i = 0; i < size; i++)
-        res[i] = pVector[i] + mt.pVector[i];
+    for (int i = 0; i < this->size; i++)
+        res[i] = this->pVector[i] + mt.pVector[i];
 
     return res;
 } /*-------------------------------------------------------------------------*/
@@ -358,12 +358,12 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-    if (size != mt.size) throw - 1;
+    if (this->size != mt.size) throw - 1;
 
-    TMatrix res(size);
+    TMatrix res(this->size);
 
-    for (int i = 0; i < size; i++)
-        res[i] = pVector[i] - mt.pVector[i];
+    for (int i = 0; i < this->size; i++)
+        res[i] = this->pVector[i] - mt.pVector[i];
 
     return res;
 } /*-------------------------------------------------------------------------*/
