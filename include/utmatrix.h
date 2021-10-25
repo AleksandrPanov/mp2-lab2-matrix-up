@@ -180,7 +180,10 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
         startIndex = v.getStartIndex();
         delete[] pVector;
         pVector = new T[size - startIndex];
-        std::copy(v.pVector, v.pVector + size - startIndex, pVector);
+        for (size_t i = 0; i < size - startIndex; i++)
+        {
+            pVector[i] = v.pVector[i];
+        }
     }
     return *this;
 } 
