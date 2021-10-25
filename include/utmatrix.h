@@ -178,8 +178,9 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
     if (this != &v) {
         size = v.getSize();
         startIndex = v.getStartIndex();
-        delete[] pVector;
-        pVector = new T[size - startIndex];
+        delete [] pVector;
+        if (size != 0)
+            pVector = new T[size - startIndex];
         for (size_t i = 0; i < size - startIndex; i++)
         {
             pVector[i] = v.pVector[i];
