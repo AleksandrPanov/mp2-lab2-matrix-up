@@ -112,7 +112,7 @@ TEST(TVector, assign_operator_change_vector_size)
     TVector<int> v2(size2);
 
     ASSERT_NO_THROW(v2 = v1);
-    EXPECT_EQ(v2, size1);
+    EXPECT_EQ(size1, v2.getSize());
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)
