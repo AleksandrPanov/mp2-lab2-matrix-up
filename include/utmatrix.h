@@ -175,16 +175,24 @@ bool TVector<T>::operator!=(const TVector &v) const
 template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector &v)
 {
-    if (this != &v) {
-        size = v.getSize();
-        startIndex = v.getStartIndex();
-        delete [] pVector;
-        if (size != 0)
-            pVector = new T[size - startIndex];
-        for (size_t i = 0; i < size - startIndex; i++)
-        {
-            pVector[i] = v.pVector[i];
-        }
+    if (this == &v)
+    {
+        return *this;
+    }
+    if (pVector != nullptr)
+    {
+        delete[] pVector;
+    }
+    size = v.size;
+    startIndex = v.startIndex;
+    if (size != 0)
+    {
+        pVector = new T[size - startIndex];
+
+    }
+    for (size_t i = 0; i < size - startIndex; i++)
+    {
+        pVector[i] = v.pVector[i];
     }
     return *this;
 } 
