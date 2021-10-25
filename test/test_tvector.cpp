@@ -99,6 +99,14 @@ TEST(TVector, assign_operator_change_vector_size)
 {
     TVector<int> v1(5);
     TVector<int> v2(6);
+    for (int i = 0; i < 5; ++i)
+    {
+        v1[i] = 1;
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        v2[i] = 1;
+    }
     v1 = v2;
     EXPECT_EQ(v1.getSize(), 6);
 }
