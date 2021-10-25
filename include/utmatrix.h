@@ -74,20 +74,20 @@ public:
 };
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector() : TVector(10) {}
+TVector<T>::TVector() : TVector(0) {}
 
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int _startIndex) : size ((size_t)_size), startIndex((size_t)_startIndex)
 {
-    if (_size < 0 || _startIndex < 0) throw - 1;
+    if (_size < 0 || _startIndex < 0 || _size > max_size) throw - 1;
     pVector = new T[size - startIndex];
 } /*------------------------------------------------------------------------ - */
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t _startIndex) : size(_size), startIndex(_startIndex)
 {
-    if (_size < 0 || _startIndex < 0) throw - 1;
+    if (_size < 0 || _startIndex < 0 || _size > max_size) throw - 1;
     pVector = new T[size - startIndex];
 } /*-------------------------------------------------------------------------*/
 
@@ -276,6 +276,7 @@ public:
     // ввод / вывод
     friend std::istream& operator>>(std::istream &in, TMatrix &mt)
     {
+
       for (int i = 0; i < mt.size; i++)
         in >> mt.pVector[i];
       return in;
@@ -291,6 +292,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
+    if (sqrt(s) > this->max_size) throw -1;
     for (size_t i = 0; i < s; i++)
         this->pVector[i] = TVector<T>((size_t)s, i);
 } /*-------------------------------------------------------------------------*/
@@ -298,6 +300,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
 {
+    if (sqrt(s) > this->max_size) throw - 1; 
     for (size_t i = 0; i < s; i++)
         this->pVector[i] = TVector<T>(s, i);
 } /*-------------------------------------------------------------------------*/
