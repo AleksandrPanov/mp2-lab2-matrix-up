@@ -75,7 +75,7 @@ TVector<T>::TVector(int _size, int startIndex)
 
     if(size<0)
     {
-        throw "exp";
+        throw "ex";
     }
     if (startIndex>=size||startIndex<0)
     {
@@ -295,7 +295,7 @@ T& TVector<T>::getElement(size_t index) const
 {
     if ( index >= size - startIndex)
     {
-        throw "exp";
+        throw "ep";
     }
     return pVector[index];
 }
@@ -336,11 +336,11 @@ public:
 
     TMatrix(const TMatrix &mt);               // копирование
     TMatrix(const TVector<TVector<T> > &mt);  // преобразование типа
-    bool operator==(const TMatrix &mt) const; // сравнение
-    bool operator!=(const TMatrix &mt) const; // сравнение
-    TMatrix& operator= (const TMatrix &mt);   // присваивание
-    TMatrix operator+ (const TMatrix &mt);    // сложение
-    TMatrix operator- (const TMatrix &mt);    // вычитание
+    //bool operator==(const TMatrix &mt) const; // сравнение
+    //bool operator!=(const TMatrix &mt) const; // сравнение
+    //TMatrix& operator= (const TMatrix &mt);   // присваивание
+    //TMatrix operator+ (const TMatrix &mt);    // сложение
+    //TMatrix operator- (const TMatrix &mt);    // вычитание
 
     // ввод / вывод
     friend std::istream& operator>>(std::istream &in, TMatrix &mt)
@@ -382,75 +382,71 @@ template <class T> // конструктор преобразования тип
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
   TVector<TVector<T> >(mt) {}
 
-template <class T> // сравнение
-bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
-{
-    if (size != mt.getSize())
-    {
-        return false;
-    }
-    for (size_t i = 0; i < size; ++i)
-    {
-        if (pVector[i] != mt.pVector[i])
-            return false;
-    }
-    return true;
-} 
-
-template <class T> // сравнение
-bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
-{
-    if (size != mt.getSize())
-    {
-        return true;
-    }
-    for (size_t i = 0; i < size; ++i)
-    {
-        if (getElement(i) != mt.getElement(i))
-            return true;
-    }
-    return false;
-} 
-
-template <class T> // присваивание
-TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
-{
-    if (this != &mt) {
-        size = mt.getSize(); 
-        delete[] pVector; 
-        pVector = new TVector<T>[size];
-        for (size_t i = 0; i < size; ++i)
-        {
-            pVector[i] = mt.pVector[i];
-        }
-    }
-    return *this;
-} 
-
-template <class T> // сложение
-TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
-{
-    if (size != mt.getSize())
-    {
-        throw "exp";
-    }
-    for (int i = 0; i < mt.getSize(); ++i)
-    {
-        getElement(i) = getElement(i) + mt.pVector[i];
-    }
-    return *this;
-} 
-
-template <class T> // вычитание
-TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
-{
-    if (size != mt.getSize())
-    {
-        throw "exp";
-    }
-    for (int i = 0; i < mt.getSize(); ++i)
-    {
-        getElement(i) = getElement(i)- mt.pVector[i];
-    }
-    return *this;
-} 
+/*template <class T>*/ // сравнение
+//bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
+//{
+//    if (size != mt.getSize())
+//    {
+//        return false;
+//    }
+//    for (size_t i = 0; i < size; ++i)
+//    {
+//        if (pVector[i] != mt.pVector[i])
+//            return false;
+//    }
+//    return true;
+//} 
+//template <class T> // сравнение
+//bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
+//{
+//    if (size != mt.getSize())
+//    {
+//        return true;
+//    }
+//    for (size_t i = 0; i < size; ++i)
+//    {
+//        if (getElement(i) != mt.getElement(i))
+//            return true;
+//    }
+//    return false;
+//} 
+//template <class T> // присваивание
+//TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
+//{
+//    if (this != &mt) {
+//        size = mt.getSize(); 
+//        delete[] pVector; 
+//        pVector = new TVector<T>[size];
+//        for (size_t i = 0; i < size; ++i)
+//        {
+//            pVector[i] = mt.pVector[i];
+//        }
+//    }
+//    return *this;
+//} 
+//template <class T> // сложение
+//TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
+//{
+//    if (size != mt.getSize())
+//    {
+//        throw "exp";
+//    }
+//    for (int i = 0; i < mt.getSize(); ++i)
+//    {
+//        getElement(i) = getElement(i) + mt.pVector[i];
+//    }
+//    return *this;
+//} 
+//template <class T> // вычитание
+//TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
+//{
+//    if (size != mt.getSize())
+//    {
+//        throw "exp";
+//    }
+//    for (int i = 0; i < mt.getSize(); ++i)
+//    {
+//        getElement(i) = getElement(i)- mt.pVector[i];
+//    }
+//    return *this;
+//} 
