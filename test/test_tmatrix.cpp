@@ -83,7 +83,6 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
     TMatrix<int> a(5);
-    a[0][0] = 1;
     TMatrix<int> b(4);
     b = a;
     EXPECT_EQ(b.getSize() ,5);
@@ -102,11 +101,7 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
     TMatrix<int> a(5);
-    TMatrix<int> b(5);
-    a[0][0] = 1;
-    a[0][1] = 2;
-    b[0][0] = 1;
-    b[0][1] = 2;
+    TMatrix<int> b(a);
     EXPECT_EQ(a,b);
 }
 

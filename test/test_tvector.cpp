@@ -99,7 +99,6 @@ TEST(TVector, assign_operator_change_vector_size)
 {
     TVector<int> v1(5);
     TVector<int> v2(6);
-    v2[3] = 5;
     v1 = v2;
     EXPECT_EQ(v1.getSize(), 6);
 }
@@ -115,11 +114,11 @@ TEST(TVector, can_assign_vectors_of_different_size)
 TEST(TVector, compare_equal_vectors_return_true)
 {
     TVector<int> v1(5);
-    TVector<int> v2(5);
-    v2[3] = 5;
-    v1[3] = 5;
-    v2[2] = 4;
-    v1[2] = 4;
+    for (int i = 0; i < 5; ++i)
+    {
+        v1[i] = 1;
+    }
+    TVector<int> v2(v1);
     EXPECT_EQ(v1 , v2);
 }
 
@@ -217,8 +216,7 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
         v1[i] = 1;
         v2[i] = 1;
     }
-    int a = v1 * v2;
-    EXPECT_EQ(a, 5);
+    EXPECT_EQ(v1*v2, 5);
    
 }
 
