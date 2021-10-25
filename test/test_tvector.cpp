@@ -98,9 +98,9 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 TEST(TVector, assign_operator_change_vector_size)
 {
     TVector<int> v1(5);
-    TVector<int> v2(6);
-    v1 = v2;
-    EXPECT_EQ(v1.getSize(), 6);
+    TVector<int> v2(3);
+    v2 = v1;
+    EXPECT_EQ(5, v2.getSize());
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)

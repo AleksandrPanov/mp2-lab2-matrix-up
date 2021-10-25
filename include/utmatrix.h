@@ -77,8 +77,7 @@ TVector<T>::TVector()
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
-
-    if(size<0)
+    if(size<0 )
     {
         throw "ex";
     }
@@ -94,7 +93,7 @@ TVector<T>::TVector(int _size, int startIndex)
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
-    if (size >= max_size)
+    if (size > max_size)
     {
         throw "exp";
     }
@@ -175,24 +174,15 @@ bool TVector<T>::operator!=(const TVector &v) const
 template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector &v)
 {
-    if (this == &v)
-    {
-        return *this;
-    }
-    if (pVector != nullptr)
-    {
-        delete[] pVector;
-    }
-    size = v.size;
-    startIndex = v.startIndex;
-    if (size != 0)
-    {
-        pVector = new T[size - startIndex];
-
-    }
-    for (size_t i = 0; i < size - startIndex; i++)
-    {
-        pVector[i] = v.pVector[i];
+    if (this != &v) {
+        size = v.size;
+        startIndex = v.startIndex;
+        if (pVector != nullptr) delete[] pVector;
+        if (size !=0) pVector = new T[size - startIndex];
+        for (size_t i = 0; i < size - startIndex; i++)
+        {
+            pVector[i] = v.pVector[i];
+        }
     }
     return *this;
 } 
