@@ -335,7 +335,7 @@ public:
     TMatrix(TSize size) = delete;
 
     TMatrix(const TMatrix &mt);               // копирование
-    TMatrix(const TVector<TVector<T> > &mt);  // преобразование типа
+    /*TMatrix(const TVector<TVector<T> > &mt); */ // преобразование типа
     //bool operator==(const TMatrix &mt) const; // сравнение
     //bool operator!=(const TMatrix &mt) const; // сравнение
     //TMatrix& operator= (const TMatrix &mt);   // присваивание
@@ -378,9 +378,9 @@ template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
   TVector<TVector<T> >(mt) {}
 
-template <class T> // конструктор преобразования типа
-TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
-  TVector<TVector<T> >(mt) {}
+//template <class T> // конструктор преобразования типа
+//TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
+//  TVector<TVector<T> >(mt) {}
 
 /*template <class T>*/ // сравнение
 //bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
