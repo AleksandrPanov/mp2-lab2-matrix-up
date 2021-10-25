@@ -270,20 +270,17 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T>& v)
 {
-    if (size != v.getSize())
+    if (size != v.getSize() || startIndex != v.getStartIndex())
     {
-        throw "exp";
-        if (startIndex != v.getStartIndex())
-        {
-            throw "exp";
-        }
-        T tmp = 0;
-        for (size_t i = 0; i < size - startIndex; ++i)
+    throw "exp";
+      }
+       T tmp = 0;
+     for (size_t i = 0; i < size - startIndex; ++i)
         {
             tmp += pVector[i] * v.pVector[i];
         }
         return tmp;
-    }
+    
 }
 template <class T>
 T& TVector<T>::getElement(int index) const
