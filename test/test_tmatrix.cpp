@@ -198,14 +198,12 @@ TEST(TMatrix, can_add_matrices_with_equal_size)
 {
     TMatrix<int> m1(3);
     TMatrix<int> m2(3);
-    m1[0][0] = 1; m2[0][0] = 1;
-    m1[0][1] = 2; m2[0][1] = 2;
-    m1[0][2] = 3; m2[0][2] = 3;
-    m1[1][1] = 4; m2[1][1] = 4;
-    m1[1][2] = 5; m2[1][2] = 5;
-    m1[2][2] = 6; m2[2][2] = 6;
+    m1[0][2] = 5;
+    m2[0][2] = 10;
+    //std::cout << std::endl << m1 << std::endl << m2 << std::endl;
 
     ASSERT_NO_THROW (m1 + m2);
+    EXPECT_EQ((m1 + m2)[0][2], 15);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
@@ -226,14 +224,11 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
     TMatrix<int> m1(3);
     TMatrix<int> m2(3);
-    m1[0][0] = 1; m2[0][0] = 1;
-    m1[0][1] = 2; m2[0][1] = 2;
-    m1[0][2] = 3; m2[0][2] = 3;
-    m1[1][1] = 4; m2[1][1] = 4;
-    m1[1][2] = 5; m2[1][2] = 5;
-    m1[2][2] = 6; m2[2][2] = 6;
+    m1[0][2] = 5;
+    m2[0][2] = 10;
 
-    ASSERT_NO_THROW(m1 - m2);
+    ASSERT_NO_THROW(m2 - m1);
+    EXPECT_EQ((m2 - m1)[0][2], 5);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
