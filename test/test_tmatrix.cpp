@@ -131,7 +131,13 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
     TMatrix<int> a(5), b(5);
+
+    a[2][2] = 5;
+    b[2][2] = 50;
+
     ASSERT_NO_THROW(a + b);
+
+    EXPECT_EQ((a + b)[2][2], 55);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
@@ -143,7 +149,13 @@ TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
     TMatrix<int> a(5), b(5);
+
+    a[2][2] = 5;
+    b[2][2] = 50;
+
     ASSERT_NO_THROW(a - b);
+
+    EXPECT_EQ((a - b)[2][2], -45);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
