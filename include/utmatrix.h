@@ -215,7 +215,7 @@ T TVector<T>::operator*(const TVector<T>& v)
     T tmp = 0;
     for (size_t i = 0; i < size - startIndex; i++)
         tmp += pVector[i] * v.pVector[i];
-    return sqrt(tmp);
+    return tmp;
 }
 
 template <class T>

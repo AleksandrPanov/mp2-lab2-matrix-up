@@ -140,7 +140,7 @@ TEST(TVector, can_add_scalar_to_vector)
     }
     ASSERT_NO_THROW(m + 5);
     m = m + 5;
-    EXPECT_EQ(v == m, true);
+    EXPECT_EQ(v, m);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)
@@ -219,7 +219,7 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
     }
     v[3] = 7;
     m[3] = 3;
-    res = 5;
+    res = 25;
     EXPECT_EQ(res, v * m);
 }
 
