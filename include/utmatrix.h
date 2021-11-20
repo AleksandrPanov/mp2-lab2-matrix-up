@@ -23,6 +23,7 @@ public:
     explicit TVector(int size, int startIndex = 0);       //конструктор инициализации
     explicit TVector(size_t size = 1, size_t startIndex = 0); //конструктор инициализации
 
+
     template <class OtherTypes>
     TVector(OtherTypes size, OtherTypes startIndex) = delete;
 
