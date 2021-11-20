@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <limits>
+#include <cmath>
 
 // Шаблон вектора
 template <class T>
