@@ -297,6 +297,8 @@ template <class T>
 TMatrix<T>::TMatrix(int s) :
     TVector<TVector<T> >(s)
 {
+    if (static_cast<size_t>(s) * s > this->max_size)
+        throw std::runtime_error("Size is too big");
     for (size_t i = 0; i < s; ++i)
         this->pVector[i] = TVector<T>(static_cast<size_t>(s), i);
 } /*-------------------------------------------------------------------------*/
@@ -305,6 +307,8 @@ template <class T>
 TMatrix<T>::TMatrix(size_t s) :
     TVector<TVector<T> >(s)
 {
+    if (static_cast<size_t>(s) * s > this->max_size)
+        throw std::runtime_error("Size is too big");
     for (size_t i = 0; i < s; ++i)
         this->pVector[i] = TVector<T>(s, i);
 } /*-------------------------------------------------------------------------*/

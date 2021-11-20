@@ -9,8 +9,13 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
-    ASSERT_ANY_THROW(TMatrix<int>(static_cast<size_t>(TVector<int>::max_size + 1ull)));
+    ASSERT_ANY_THROW(TMatrix<int>(static_cast<size_t>(std::sqrt(TVector<int>::max_size)) + 1ull));
 }
+
+//TEST(TMatrix, create_max_size_matrix)
+//{
+//    ASSERT_NO_THROW(TMatrix<int>(static_cast<size_t>(std::sqrt(TVector<int>::max_size))));
+//}
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
 {
@@ -19,7 +24,7 @@ TEST(TMatrix, throws_when_create_matrix_with_negative_length)
 
 TEST(TMatrix, can_create_copied_matrix)
 {
-    TMatrix<int> m(5);
+    TMatrix<int> m(sizeof(int));
 
     ASSERT_NO_THROW(TMatrix<int> m1(m));
 }
