@@ -19,16 +19,25 @@ void main()
     {
         for (j = i; j < 5; j++)
         {
-            //a[i][j] =  i * 10 + j;
-            //b[i][j] = (i * 10 + j) * 100;
-            a[i][j] = 1;
-            b[i][j] = 1;
+            a[i][j] =  i * 10 + j;
+            b[i][j] = (i * 10 + j) * 100;
+            //a[i][j] = 1;
+            //b[i][j] = 1;
         }
     }
     c = a + b;
     std::cout << "Matrix a = " << std::endl << a << std::endl;
     std::cout << "Matrix b = " << std::endl << b << std::endl;
     std::cout << "Matrix c = a + b" << std::endl << c << std::endl;
+
+    TMatrix<int> aa(a);
+
+    if(a==aa)
+        std::cout << "Yes, equal" << std::endl;
+    else 
+        std::cout << "No equal" << std::endl;
+    std::cout << a << std::endl << aa << std::endl;
+
 
     TVector<int> f(3, 0), g(3, 0);
     for (int i = 0; i < 3; i++)
@@ -46,5 +55,14 @@ void main()
     else
         std::cout << "No" << std::endl;
     
+    TVector<int> k(3, 0);
+    for (int i = 0; i < 3; i++)
+    {
+        k[i] = 1;
+    }
+    TVector<int> p(k);
+
+    //k.setElement(-1, 99);
+    std::cout << p << std::endl << k;
 }
 //---------------------------------------------------------------------------
