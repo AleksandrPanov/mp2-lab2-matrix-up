@@ -8,7 +8,6 @@ TEST(TVector, can_create_vector_with_positive_length)
 
 TEST(TVector, cant_create_too_large_vector)
 {
-    // максимальный допустимый размер вектора = TVector<int>::max_size
     ASSERT_ANY_THROW(TVector<int> v(TVector<int>::max_size + static_cast<size_t>(1)));
 }
 
@@ -269,7 +268,6 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
     v1[3] = 3; v2[3] = 2;
     v1[4] = 2; v2[4] = 6;
 
-    // (0 0 1 3 2) * (0 0 1 2 6)^T
     int res = 19;
     int prod = v1 * v2;
 
