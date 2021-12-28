@@ -140,7 +140,7 @@ TEST(TVector, compare_vector_with_itself_return_true)
 TEST(TVector, vectors_with_different_size_are_not_equal)
 {
     TVector <int> v(5), v1(7);
-    EXPECT_EQ(false, v == v1);
+    EXPECT_EQ(-1, v == v1);
 }
 
 TEST(TVector, can_add_scalar_to_vector)
