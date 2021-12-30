@@ -387,7 +387,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s) : TVector<TVector<T>>(s)
 {
-	if (s < 0 || static_cast<unsigned long long>(s * s) > this->max_size)
+	if (s < 0 || static_cast<unsigned long long>(s) > sqrt(this-> max_size))
 	{
 		throw "size out of range";
 	}
