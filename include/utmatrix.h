@@ -106,9 +106,7 @@ TVector<T>::~TVector()
 template <class T> // доступ
 T& TVector<T>::operator[](int pos)
 {
-    T* n;
-    n = pVector[pos]&;
-    return *n;
+    return pVector[pos];
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
@@ -267,7 +265,8 @@ template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
     for (int i = 0; i < s; i++) {
-        pVector[i] = pVector;
+        TVector T(s);
+        pVector[i] = T;
     }
 } /*-------------------------------------------------------------------------*/
 
