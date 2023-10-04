@@ -20,8 +20,8 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
-    TVector() {}
-    TVector(int size, int startIndex = 0);       //конструктор инициализации
+    TVector(size_t n);
+    TVector(int size, int startIndex = 0);   //конструктор инициализации
     TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
 
     template <class TSize, class TStartIndex>
@@ -36,8 +36,8 @@ public:
     void setElement(int index, T element);
     void setElement(size_t index, T element);
 
-    T& operator[](int pos);                  // доступ
-    T& operator[](size_t pos);               // доступ
+    T& operator[](int pos);                 // доступ
+    T& operator[](size_t pos);           // доступ
     bool operator==(const TVector &v) const; // сравнение
     bool operator!=(const TVector &v) const; // сравнение
     TVector& operator=(const TVector &v);    // присваивание
@@ -65,95 +65,163 @@ public:
 };
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(int _size, int startIndex)
+TVector<T>::TVector(int n, int si)
 {
-    pVector = new T[_size];
+    int size = n;
+    int startIndex = si;
+    pVector = new int[n];
+    for (int i = 0; i < startIndex; i++) {
+        pVector[i] = 0;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(size_t _size, size_t startIndex)
+TVector<T>::TVector(size_t n, size_t si)
 {
+    size_t size = n;
+    size_t startIndex = si;
+    pVector = new T[n];
+    for (int i = 0; i < startIndex; i++) {
+        pVector[i] = 0;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //конструктор копирования
 TVector<T>::TVector(const TVector<T> &v)
 {
+    size = v.size;
+    startIndex = v.startIndex;
+    pVector = new T[size];
+    for (int i = 0; i < size; i++) {
+        pVector[i] = v.pVector[i];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //деструктор
 TVector<T>::~TVector()
 {
+    delete[] pVector;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
 T& TVector<T>::operator[](int pos)
 {
-    return *pVector;
+    T* n;
+    n = pVector[pos]&;
+    return *n;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
 T& TVector<T>::operator[](size_t pos)
 {
-    return *pVector;
+    T* n = pVector[pos];
+    n = pVector[pos]&;
+    return *n;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
 bool TVector<T>::operator==(const TVector &v) const
 {
-    return false;
+    if (size != v.size) {
+        return false;
+    }
+    else {
+        for (int i = 0; i < size; i++) {
+            if (pVector[i] != v.pVector[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
 bool TVector<T>::operator!=(const TVector &v) const
 {
+    if (size != v.size) {
+        return true;
+    }
+    else {
+        for (int i = 0; i < size; i++) {
+            if (pVector[i] != v.pVector[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector &v)
 {
+    size = v.size;
+    pVector = new T[size];
+    for (int i = 0; i < n; i++) {
+        pVector[i] = v.pVector[i];
+    }
     return TVector<T>();
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
+    for (int i = 0; i < size; i++) {
+        pVector[i] += val;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
+    for (int i = 0; i < size; i++) {
+        pVector[i] -= val;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // умножить на скаляр
 TVector<T> TVector<T>::operator*(const T &val)
 {
+    for (int i = 0; i < size; i++) {
+        pVector[i] *= val;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
+    for (int i = 0; i < size; i++) {
+        pVector[i] += v.pVector[i];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
+    for (int i = 0; i < size; i++) {
+        pVector[i] -= v.pVector[i];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T> &v)
 {
-    return T();
+    T sum;
+    for (int i = 0; i < size; i++) {
+        sum=sum+(pVector[i] *v.pVector[i]);
+    }
+    return sum;
 } /*-------------------------------------------------------------------------*/
 
 template <class T>
 T& TVector<T>::getElement(int index)
 {
-    return *pVector;
+    return pVector[index];
 }
 
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
+    pVector[index] = element;
 }
 
 // Верхнетреугольная матрица
@@ -198,11 +266,18 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
+    for (int i = 0; i < s; i++) {
+        pVector[i] = pVector;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
-  TVector<TVector<T> >(mt) {}
+  TVector<TVector<T> >(mt) {
+    for (int i = 0; i < s; i++) {
+        pVector[i] = mt.pVector[i];
+    }
+}
 
 template <class T> // конструктор преобразования типа
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
@@ -211,27 +286,48 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
+    for (int i = 0; i < s; i++) {
+        if (pVector[i] != mt.pVector[i]) {
+            return false;
+        };
+    }
+    return true;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 {
+    for (int i = 0; i < s; i++) {
+        if (pVector[i] != mt.pVector[i]) {
+            return true;
+        };
+    }
+    return false;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
+    for (int i = 0; i < s; i++) {
+        pVector = mt.pVector[i];
+    }
     return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
+    for (int i = 0; i < size; i++) {
+        pVector += mt.pVector[i];
+    }
     return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
+    for (int i = 0; i < s; i++) {
+        pVector -= mt.pVector[i];
+    }
     return *this;
 } /*-------------------------------------------------------------------------*/
