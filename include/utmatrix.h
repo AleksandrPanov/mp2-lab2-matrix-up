@@ -264,8 +264,8 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
+    TVector T(s);
     for (int i = 0; i < s; i++) {
-        TVector T(s);
         pVector[i] = T;
     }
 } /*-------------------------------------------------------------------------*/
@@ -307,8 +307,9 @@ bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
-    for (int i = 0; i < s; i++) {
-        pVector = mt.pVector[i];
+    size = mt.size;
+    for (int i = 0; i < mt.size; i++) {
+        pVector[i] = mt.pVector[i];
     }
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -317,7 +318,7 @@ template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
     for (int i = 0; i < size; i++) {
-        pVector += mt.pVector[i];
+        pVector[i] = pVector[i]+ mt.pVector[i];
     }
     return *this;
 } /*-------------------------------------------------------------------------*/
