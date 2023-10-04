@@ -265,6 +265,7 @@ template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
     TVector T(s);
+    pVector = new TVector[s];
     for (int i = 0; i < s; i++) {
         pVector[i] = T;
     }
