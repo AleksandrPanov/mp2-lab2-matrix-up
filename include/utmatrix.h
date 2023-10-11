@@ -20,6 +20,7 @@ protected:
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
+    TVector();
     TVector(size_t n);
     TVector(int size, int startIndex = 0);   //конструктор инициализации
     TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
@@ -58,31 +59,37 @@ public:
     {
         return in;
     }
-    friend std::ostream& operator<<(std::ostream &out, const TVector &v)
+    friend std::ostream& operator<<(std::ostream& out, const TVector& v)
     {
+        for (size_t i = 0; i < v.size; i++) {
+            out << v.pVector[i]<<' ';
+        }
         return out;
     }
 };
 
+
 template <class T>//конструктор инициализации
-TVector<T>::TVector(int n, int si)
+TVector<T>::TVector(int size, int startIndex)
 {
-    int size = n;
-    int startIndex = si;
-    pVector = new int[n];
-    for (int i = 0; i < startIndex; i++) {
-        pVector[i] = 0;
+    this->size=size;
+    this->startIndex=startIndex;
+    pVector = new T[size];
+    T  a = 0;
+    for (int i = 0; i < size; i++) {
+        pVector[i] = a;
     }
 } /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(size_t n, size_t si)
+TVector<T>::TVector(size_t size, size_t startIndex)
 {
-    size_t size = n;
-    size_t startIndex = si;
-    pVector = new T[n];
-    for (int i = 0; i < startIndex; i++) {
-        pVector[i] = 0;
+    this->size=size;
+    this->startIndex=startIndex;
+    pVector = new T[size];
+    T  a = 0;
+    for (size_t i = 0; i < size; i++) {
+        pVector[i] = a;
     }
 } /*-------------------------------------------------------------------------*/
 
@@ -100,7 +107,9 @@ TVector<T>::TVector(const TVector<T> &v)
 template <class T> //деструктор
 TVector<T>::~TVector()
 {
+    size = 0;
     delete[] pVector;
+    startIndex = 0;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
@@ -153,43 +162,51 @@ template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector &v)
 {
     size = v.size;
-    pVector = new T[size];
-    for (int i = 0; i < n; i++) {
+    startIndex = v.startIndex;
+    for (int i = 0; i < size; i++) {
         pVector[i] = v.pVector[i];
     }
-    return TVector<T>();
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
+    TVector A(size, startIndex);
     for (int i = 0; i < size; i++) {
-        pVector[i] += val;
+        A.pVector[i] = pVector[i] + val;
     }
+    return A;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
+    TVector A(size, startIndex);
     for (int i = 0; i < size; i++) {
-        pVector[i] -= val;
+        A.pVector[i] = pVector[i] - val;
     }
+    return A;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // умножить на скаляр
 TVector<T> TVector<T>::operator*(const T &val)
 {
+    TVector A(size, startIndex);
     for (int i = 0; i < size; i++) {
-        pVector[i] *= val;
+        A.pVector[i] =pVector[i]* val;
     }
+    return A;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
+    TVector A(size, startIndex);
     for (int i = 0; i < size; i++) {
-        pVector[i] += v.pVector[i];
+        A.pVector[i] =pVector[i]+v.pVector[i];
     }
+    return A;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
@@ -198,6 +215,7 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
     for (int i = 0; i < size; i++) {
         pVector[i] -= v.pVector[i];
     }
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // скалярное произведение
