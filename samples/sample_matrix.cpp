@@ -12,13 +12,7 @@ using namespace std;
 
 int main()
 {
-    TVector<int> T(5 , 3);
-    T.setElement(1, 6);
-    TVector<int> A(5, 3);
-    A = T+5;
-    A = A + T;
-    cout << T << A;
-    /*TMatrix<int> a(5), b(5), c(5);
+    TMatrix<int> a(5), b(5), c(5);
     int i, j;
     setlocale(LC_ALL, "Russian");
     std::cout << "Тестирование программ поддержки представления треугольных матриц"
@@ -33,6 +27,6 @@ int main()
     std::cout << "Matrix a = " << std::endl << a << std::endl;
     std::cout << "Matrix b = " << std::endl << b << std::endl;
     std::cout << "Matrix c = a + b" << std::endl << c << std::endl;
-    return 0;*/
+    return 0;
 }
 //---------------------------------------------------------------------------

@@ -72,24 +72,34 @@ public:
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int size, int startIndex)
 {
-    this->size=size;
-    this->startIndex=startIndex;
-    pVector = new T[size];
-    T  a = 0;
-    for (int i = 0; i < size; i++) {
-        pVector[i] = a;
+    if (size > max_size) {
+        throw 'FALL';
+    }
+    else {
+        this->size = size;
+        this->startIndex = startIndex;
+        pVector = new T[size];
+        T  a = 0;
+        for (int i = 0; i < size; i++) {
+            pVector[i] = a;
+        }
     }
 } /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t size, size_t startIndex)
 {
-    this->size=size;
-    this->startIndex=startIndex;
-    pVector = new T[size];
-    T  a = 0;
-    for (size_t i = 0; i < size; i++) {
-        pVector[i] = a;
+    if (size > max_size) {
+        throw 'FALL';
+    }
+    else {
+        this->size = size;
+        this->startIndex = startIndex;
+        pVector = new T[size];
+        T  a = 0;
+        for (size_t i = 0; i < size; i++) {
+            pVector[i] = a;
+        }
     }
 } /*-------------------------------------------------------------------------*/
 
@@ -292,7 +302,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
   TVector<TVector<T> >(mt) {
-    for (int i = 0; i < s; i++) {
+    for (int i = 0; i < mt; i++) {
         pVector[i] = mt.pVector[i];
     }
 }
