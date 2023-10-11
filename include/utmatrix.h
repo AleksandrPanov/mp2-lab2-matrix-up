@@ -9,6 +9,14 @@
 #include <iostream>
 #include <limits>
 
+struct OutOfIndException {
+    int a;
+};
+
+struct OverLimitException {
+    int b;
+};
+
 // Шаблон вектора
 template <class T>
 class TVector
@@ -67,22 +75,45 @@ public:
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
-    pVector = new T[_size];
+    if (_size <= 0 || startIndex < 0 || _size>max_size) {
+        throw OutOfIndException();
+    }
+    else {
+        size = _size;
+        this->startIndex = startIndex;
+        this->pVector = new T[_size-startIndex];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
+    if (_size>max_size) {
+        throw OverLimitException();
+    }
+    else {
+        size = _size;
+        this->startIndex = startIndex;
+        this->pVector = new T[_size - startIndex];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //конструктор копирования
 TVector<T>::TVector(const TVector<T> &v)
 {
+    delete[] pVector;
+    pVector = new T[v.size];
+    startIndex = v.startIndex;
+    size = v.size;
+    for (size_t i = 0; i < size - startIndex; i++) {
+        pVector[i] = v.pVector[i];
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //деструктор
 TVector<T>::~TVector()
 {
+    delete[] pVector;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
@@ -148,12 +179,13 @@ T TVector<T>::operator*(const TVector<T> &v)
 template <class T>
 T& TVector<T>::getElement(int index)
 {
-    return *pVector;
+    return pVector[index];
 }
 
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
+    pVector[index] = element;
 }
 
 // Верхнетреугольная матрица
