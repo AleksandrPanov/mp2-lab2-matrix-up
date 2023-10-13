@@ -258,7 +258,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
-    if ((s*s) > max_size)
+    if ((s*s) > TVector<T>::max_size)
         throw 1;
     for (int i = 0; i < s; i++) {
         TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
@@ -295,11 +295,11 @@ template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
     if (this == &mt) return *this;
-    size = mt.size;
-    startIndex = mt.startIndex;
-    delete[] pVector;
-    pVector = new TVector<T>[size];
-    for (int i = 0; i < size; i++)
+    this->size = mt.size;
+    this->startIndex = mt.startIndex;
+    delete[] this->pVector;
+    this->pVector = new TVector<T>[size];
+    for (int i = 0; i < this->size; i++)
         this->setElement(i, mt.getElement(i));
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -307,7 +307,7 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
         this->setElement(i, this->getElement(i) + mt.getElement(i));
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -315,9 +315,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-    //for (int i = 0; i < size - startIndex; i++)
-    //    this->setElement(i, this->getElement(i) - mt.getElement(i));
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
         this->setElement(i, this->getElement(i) - mt.getElement(i));
     return *this;
 } /*-------------------------------------------------------------------------*/

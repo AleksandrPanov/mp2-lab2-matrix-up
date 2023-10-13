@@ -9,7 +9,7 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
-    ASSERT_ANY_THROW(TMatrix<int>(static_cast<int>(sqrt(TVector<int>::max_size))));
+    ASSERT_ANY_THROW(TMatrix<int>(static_cast<int>(sqrt(TVector<int>::max_size)+1)));
     //ADD_FAILURE();
 }
 
