@@ -17,10 +17,11 @@ protected:
     T *pVector;
     size_t size;       // размер вектора
     size_t startIndex; // индекс первого элемента вектора
+    size_t Memsize;
 public:
     static const size_t max_size = std::numeric_limits<unsigned int>::max();
 
-    TVector();
+    TVector() :size(0), startIndex(0), pVector(nullptr) {};
     TVector(size_t n);
     TVector(int size, int startIndex = 0);   //конструктор инициализации
     TVector(size_t size, size_t startIndex = 0); //конструктор инициализации
@@ -32,8 +33,8 @@ public:
     ~TVector();
     size_t getSize()      { return size;       } // размер вектора
     size_t getStartIndex(){ return startIndex; } // индекс первого элемента
-    T& getElement(int i);
-    T& getElement(size_t i);
+    T& getElement(int i) const;
+    T& getElement(size_t i) const;
     void setElement(int index, T element);
     void setElement(size_t index, T element);
 
@@ -61,9 +62,6 @@ public:
     }
     friend std::ostream& operator<<(std::ostream& out, const TVector& v)
     {
-        for (size_t i = 0; i < v.size; i++) {
-            out << v.pVector[i]<<' ';
-        }
         return out;
     }
 };
@@ -72,35 +70,27 @@ public:
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int size, int startIndex)
 {
-    if (size > max_size) {
+    if (size > max_size || startIndex < 0 || startIndex >= size)
         throw 'FALL';
-    }
-    else {
-        this->size = size;
-        this->startIndex = startIndex;
-        pVector = new T[size];
-        T  a = 0;
-        for (int i = 0; i < size; i++) {
-            pVector[i] = a;
-        }
-    }
-} /*-------------------------------------------------------------------------*/
+    this->size = size;
+    this->startIndex = startIndex;
+    Memsize = size - startIndex;
+    pVector = new T[Memsize];
+    for (int i = 0; i < Memsize; i++)
+        pVector[i] = T();
+}/*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t size, size_t startIndex)
 {
-    if (size > max_size) {
+    if (size > max_size || startIndex < 0 || startIndex >= size)
         throw 'FALL';
-    }
-    else {
-        this->size = size;
-        this->startIndex = startIndex;
-        pVector = new T[size];
-        T  a = 0;
-        for (size_t i = 0; i < size; i++) {
-            pVector[i] = a;
-        }
-    }
+    this->size = size;
+    this->startIndex = startIndex;
+    Memsize = size - startIndex;
+    pVector = new T[Memsize];
+    for (int i = 0; i < Memsize; i++)
+        pVector[i] = (T)0;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //конструктор копирования
@@ -108,8 +98,9 @@ TVector<T>::TVector(const TVector<T> &v)
 {
     size = v.size;
     startIndex = v.startIndex;
-    pVector = new T[size];
-    for (int i = 0; i < size; i++) {
+    Memsize = size-startIndex;
+    pVector = new T[Memsize];
+    for (int i = 0; i < Memsize; i++) {
         pVector[i] = v.pVector[i];
     }
 } /*-------------------------------------------------------------------------*/
@@ -120,30 +111,33 @@ TVector<T>::~TVector()
     size = 0;
     delete[] pVector;
     startIndex = 0;
+    Memsize = 0;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
 T& TVector<T>::operator[](int pos)
 {
-    return pVector[pos];
+    if (pos < 0 || pos >= size)
+        throw 'FALL';
+    return pVector[pos-startIndex];
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // доступ
 T& TVector<T>::operator[](size_t pos)
 {
-    T* n = pVector[pos];
-    n = pVector[pos]&;
-    return *n;
+    if (pos < 0 || pos >= size)
+        throw 'FALL';
+    return pVector[pos - startIndex];
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
 bool TVector<T>::operator==(const TVector &v) const
 {
-    if (size != v.size) {
+    if (size != v.size || startIndex!=v.startIndex) {
         return false;
     }
     else {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < Memsize; i++) {
             if (pVector[i] != v.pVector[i]) {
                 return false;
             }
@@ -155,11 +149,11 @@ bool TVector<T>::operator==(const TVector &v) const
 template <class T> // сравнение
 bool TVector<T>::operator!=(const TVector &v) const
 {
-    if (size != v.size) {
+    if (size != v.size || startIndex != v.startIndex) {
         return true;
     }
     else {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < Memsize; i++) {
             if (pVector[i] != v.pVector[i]) {
                 return true;
             }
@@ -173,7 +167,10 @@ TVector<T>& TVector<T>::operator=(const TVector &v)
 {
     size = v.size;
     startIndex = v.startIndex;
-    for (int i = 0; i < size; i++) {
+    Memsize = size-startIndex;
+    delete[] pVector;
+    pVector = new T[Memsize];
+    for (int i = 0; i < Memsize; i++) {
         pVector[i] = v.pVector[i];
     }
     return *this;
@@ -183,7 +180,7 @@ template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
     TVector A(size, startIndex);
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < Memsize; i++) {
         A.pVector[i] = pVector[i] + val;
     }
     return A;
@@ -213,7 +210,7 @@ template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
     TVector A(size, startIndex);
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < Memsize; i++) {
         A.pVector[i] =pVector[i]+v.pVector[i];
     }
     return A;
@@ -222,7 +219,7 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
 template <class T> // вычитание
 TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < Memsize; i++) {
         pVector[i] -= v.pVector[i];
     }
     return *this;
@@ -231,22 +228,31 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T> &v)
 {
-    T sum;
-    for (int i = 0; i < size; i++) {
+    if (Memsize!=v.Memsize) {
+        throw 'FALL';
+    }
+    T sum=0;
+    for (int i = 0; i < Memsize; i++) {
         sum=sum+(pVector[i] *v.pVector[i]);
     }
     return sum;
 } /*-------------------------------------------------------------------------*/
 
 template <class T>
-T& TVector<T>::getElement(int index)
+T& TVector<T>::getElement(int index)const
 {
+    if (index < 0 || index + startIndex >= size) {
+        throw 'FALL';
+    }
     return pVector[index];
 }
 
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
+    if (index < 0 || index + startIndex >= size) {
+        throw 'FALL';
+    }
     pVector[index] = element;
 }
 
@@ -290,20 +296,24 @@ public:
 };
 
 template <class T>
-TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
+TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
-    TVector T(s);
-    pVector = new TVector[s];
+    if ((s * s) > TVector<T>::max_size)
+        throw 'FALL';
+    
     for (int i = 0; i < s; i++) {
-        pVector[i] = T;
+        TVector<T> a(s, i);
+        TVector<TVector<T>>::pVector[i] = a;
     }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // конструктор копирования
-TMatrix<T>::TMatrix(const TMatrix<T> &mt):
-  TVector<TVector<T> >(mt) {
-    for (int i = 0; i < mt; i++) {
-        pVector[i] = mt.pVector[i];
+TMatrix<T>::TMatrix(const TMatrix<T> &mt)
+{
+    this->size = mt.size;
+    this->startIndex = mt.startIndex;
+    for (int i = 0; i < size; i++) {
+        TVector<TVector<T>>::pVector[i] = mt.pVector[i];
     }
 }
 
@@ -314,10 +324,11 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
-    for (int i = 0; i < s; i++) {
-        if (pVector[i] != mt.pVector[i]) {
+    if (TVector<TVector<T>>::size != mt.size || TVector<TVector<T>>::startIndex != mt.startIndex)
+        return false;
+    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
+        if (TVector<TVector<T>>::pVector[i] != mt.pVector[i])
             return false;
-        };
     }
     return true;
 } /*-------------------------------------------------------------------------*/
@@ -325,10 +336,11 @@ bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 {
-    for (int i = 0; i < s; i++) {
-        if (pVector[i] != mt.pVector[i]) {
+    if (TVector<TVector<T>>::size != mt.size || TVector<TVector<T>>::startIndex != mt.startIndex)
+        return true;
+    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
+        if (TVector<TVector<T>>::pVector[i] != mt.pVector[i])
             return true;
-        };
     }
     return false;
 } /*-------------------------------------------------------------------------*/
@@ -336,9 +348,12 @@ bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
-    size = mt.size;
-    for (int i = 0; i < mt.size; i++) {
-        pVector[i] = mt.pVector[i];
+    TVector<TVector<T>>::size = mt.size;
+    this->startIndex = mt.startIndex;
+    delete[] pVector;
+    pVector = new TVector<T>[size];
+    for (int i = 0; i < size; i++) {
+        this->setElement(i, mt.getElement(i));
     }
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -346,17 +361,16 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-    for (int i = 0; i < size; i++) {
-        pVector[i] = pVector[i]+ mt.pVector[i];
-    }
+    
+    for (int i = 0; i < this->size; i++)
+        this->setElement(i, this->getElement(i) + mt.getElement(i));
     return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-    for (int i = 0; i < s; i++) {
-        pVector -= mt.pVector[i];
-    }
+    for (int i = 0; i < this->size; i++)
+        this->setElement(i, this->getElement(i) - mt.getElement(i));
     return *this;
 } /*-------------------------------------------------------------------------*/
