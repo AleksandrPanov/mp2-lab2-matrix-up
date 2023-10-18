@@ -12,6 +12,8 @@ using namespace std;
 
 int main()
 {
+    TMatrix<int> m1(5);
+    TMatrix<int> m2(m1);
     /*TMatrix<int> a(5), b(5), c(5);
     int i, j;
     setlocale(LC_ALL, "Russian");

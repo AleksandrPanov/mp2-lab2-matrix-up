@@ -33,6 +33,7 @@ public:
     ~TVector();
     size_t getSize()      { return size;       } // размер вектора
     size_t getStartIndex(){ return startIndex; } // индекс первого элемента
+    size_t getmaxSize() { return max_size; }
     T& getElement(int i) const;
     T& getElement(size_t i) const;
     void setElement(int index, T element);
@@ -70,7 +71,7 @@ public:
 template <class T>//конструктор инициализации
 TVector<T>::TVector(int _size, int startIndex)
 {
-    if (_size > max_size || startIndex < 0 || startIndex >= _size)
+    if (_size >= max_size || startIndex < 0 || startIndex >= _size)
         throw 'FALL';
     size =_size;
     this->startIndex = startIndex;
@@ -83,7 +84,7 @@ TVector<T>::TVector(int _size, int startIndex)
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t size, size_t startIndex)
 {
-    if (size > max_size || startIndex < 0 || startIndex >= size)
+    if (size >= max_size || startIndex < 0 || startIndex >= size)
         throw 'FALL';
     this->size = size;
     this->startIndex = startIndex;
@@ -303,11 +304,11 @@ public:
 };
 
 template <class T>
-TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
+TMatrix<T>::TMatrix(int s) : TVector<TVector<T>>(s)
 {
-    if ((s * s) > TVector<T>::max_size)
+    if (static_cast<unsigned long long>(static_cast<unsigned long long>(s) * static_cast<unsigned long long>(s)) > static_cast<unsigned long long>(TVector<T>::max_size)) {
         throw 'FALL';
-    
+    }
     for (int i = 0; i < s; i++) {
         TVector<T> a(s, i);
         TVector<TVector<T>>::pVector[i] = a;
@@ -315,14 +316,8 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // конструктор копирования
-TMatrix<T>::TMatrix(const TMatrix<T> &mt)
-{
-    size = mt.size;
-    startIndex = mt.startIndex;
-    for (int i = 0; i < size; i++) {
-        TVector<TVector<T>>::pVector[i] = mt.pVector[i];
-    }
-}
+TMatrix<T>::TMatrix(const TMatrix<T> &mt):
+TVector<TVector<T> >(mt) {}
 
 template <class T> // конструктор преобразования типа
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
@@ -368,7 +363,9 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-    
+    if (this->size != mt.size) {
+        throw 'FALL';
+    }
     for (int i = 0; i < this->size; i++)
         this->setElement(i, this->getElement(i) + mt.getElement(i));
     return *this;
@@ -377,6 +374,9 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
+    if (this->size != mt.size) {
+        throw 'FALL';
+    }
     for (int i = 0; i < this->size; i++)
         this->setElement(i, this->getElement(i) - mt.getElement(i));
     return *this;
