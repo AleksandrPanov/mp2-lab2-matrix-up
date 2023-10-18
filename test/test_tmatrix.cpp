@@ -31,22 +31,27 @@ TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-    ADD_FAILURE();
+
 }
 
 TEST(TMatrix, can_get_size)
 {
-    ADD_FAILURE();
+    TMatrix<int> m1(5);
+    int size = 5;
+    EXPECT_EQ(5, m1.getSize());
 }
 
 TEST(TMatrix, can_set_and_get_element)
 {
-    ADD_FAILURE();
+    TMatrix<int> m(5);
+    m.setElement(1, 5);
+    EXPECT_EQ(5, m.getElement(1));
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
-    ADD_FAILURE();
+    TMatrix<int> m(5);
+    ASSERT_ANY_THROW(m.getElement(-1));
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)

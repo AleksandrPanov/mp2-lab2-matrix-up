@@ -317,8 +317,8 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt)
 {
-    this->size = mt.size;
-    this->startIndex = mt.startIndex;
+    size = mt.size;
+    startIndex = mt.startIndex;
     for (int i = 0; i < size; i++) {
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
     }
