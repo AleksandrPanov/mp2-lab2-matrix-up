@@ -258,7 +258,8 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
 {
-    if ((s*s) > TVector<T>::max_size)
+    //unsigned long long x = (s * s);
+    if (static_cast<unsigned long long>(static_cast<unsigned long long>(s)* static_cast<unsigned long long>(s)) > static_cast<unsigned long long>(TVector<T>::max_size))
         throw 1;
     for (int i = 0; i < s; i++) {
         TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);

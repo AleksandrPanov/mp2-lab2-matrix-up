@@ -10,9 +10,8 @@
 
 int main()
 {
-    const int size = 2;
-    TMatrix<int> m1(size);
-    m1 = m1;
+   TMatrix<int> m(65536);
+    std::cout << m;
     // << "\n" << m2;
     //std::cout << a;
     //std::cout << a;
