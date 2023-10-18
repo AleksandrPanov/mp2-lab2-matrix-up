@@ -326,10 +326,10 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
-    if (TVector<TVector<T>>::size != mt.size || TVector<TVector<T>>::startIndex != mt.startIndex)
+    if (this->size != mt.size || this->startIndex != mt.startIndex)
         return false;
-    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
-        if (TVector<TVector<T>>::pVector[i] != mt.pVector[i])
+    for (int i = 0; i < this->size; i++) {
+        if (this->pVector[i] != mt.pVector[i])
             return false;
     }
     return true;
@@ -338,10 +338,10 @@ bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 {
-    if (TVector<TVector<T>>::size != mt.size || TVector<TVector<T>>::startIndex != mt.startIndex)
+    if (this->size != mt.size || this->startIndex != mt.startIndex)
         return true;
-    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
-        if (TVector<TVector<T>>::pVector[i] != mt.pVector[i])
+    for (int i = 0; i < this->size; i++) {
+        if (this->pVector[i] != mt.pVector[i])
             return true;
     }
     return false;
@@ -367,7 +367,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
         throw 'FALL';
     }
     for (int i = 0; i < this->size; i++)
-        this->setElement(i, this->getElement(i) + mt.getElement(i));
+        this->pVector[i]=this->pVector[i]+mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
 
@@ -378,6 +378,6 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
         throw 'FALL';
     }
     for (int i = 0; i < this->size; i++)
-        this->setElement(i, this->getElement(i) - mt.getElement(i));
+        this->pVector[i] = this->pVector[i] - mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/

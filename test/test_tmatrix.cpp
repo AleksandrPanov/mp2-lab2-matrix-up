@@ -36,7 +36,13 @@ TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-
+    TMatrix<int> m1(5);
+    m1[0].setElement(0, 1);
+    m1[0].setElement(1, 1);
+    m1[0].setElement(2, 1);
+    TMatrix<int> m2(m1);
+    m2[0].setElement(0, 5);
+    EXPECT_NE(m2, m1);
 }
 
 TEST(TMatrix, can_get_size)
