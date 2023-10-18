@@ -353,8 +353,8 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
     TVector<TVector<T>>::size = mt.size;
     this->startIndex = mt.startIndex;
     delete[] TVector<TVector<T>>::pVector;
-    pVector = new TVector<T>[TVector<TVector<T>>::size];
-    for (int i = 0; i < size; i++) {
+    TVector<TVector<T>>::pVector = new TVector<T>[TVector<TVector<T>>::size];
+    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
         this->setElement(i, mt.getElement(i));
     }
     return *this;
