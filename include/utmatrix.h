@@ -68,11 +68,11 @@ public:
 
 
 template <class T>//конструктор инициализации
-TVector<T>::TVector(int size, int startIndex)
+TVector<T>::TVector(int _size, int startIndex)
 {
-    if (size > max_size || startIndex < 0 || startIndex >= size)
+    if (_size > max_size || startIndex < 0 || startIndex >= _size)
         throw 'FALL';
-    this->size = size;
+    size =_size;
     this->startIndex = startIndex;
     Memsize = size - startIndex;
     pVector = new T[Memsize];
@@ -90,7 +90,7 @@ TVector<T>::TVector(size_t size, size_t startIndex)
     Memsize = size - startIndex;
     pVector = new T[Memsize];
     for (int i = 0; i < Memsize; i++)
-        pVector[i] = (T)0;
+        pVector[i] = T();
 } /*-------------------------------------------------------------------------*/
 
 template <class T> //конструктор копирования
@@ -180,7 +180,7 @@ template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
     TVector A(size, startIndex);
-    for (int i = 0; i < Memsize; i++) {
+    for (int i = 0; i < A.Memsize; i++) {
         A.pVector[i] = pVector[i] + val;
     }
     return A;
@@ -190,7 +190,7 @@ template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
     TVector A(size, startIndex);
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < A.Memsize; i++) {
         A.pVector[i] = pVector[i] - val;
     }
     return A;
@@ -200,7 +200,7 @@ template <class T> // умножить на скаляр
 TVector<T> TVector<T>::operator*(const T &val)
 {
     TVector A(size, startIndex);
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < A.Memsize; i++) {
         A.pVector[i] =pVector[i]* val;
     }
     return A;
@@ -209,8 +209,11 @@ TVector<T> TVector<T>::operator*(const T &val)
 template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
+    if (size != v.size || startIndex != v.startIndex) {
+        throw 'FALL';
+    }
     TVector A(size, startIndex);
-    for (int i = 0; i < Memsize; i++) {
+    for (int i = 0; i < A.Memsize; i++) {
         A.pVector[i] =pVector[i]+v.pVector[i];
     }
     return A;
@@ -219,16 +222,20 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
 template <class T> // вычитание
 TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
-    for (int i = 0; i < Memsize; i++) {
-        pVector[i] -= v.pVector[i];
+    if (size != v.size || startIndex != v.startIndex) {
+        throw 'FALL';
     }
-    return *this;
+    TVector A(size, startIndex);
+    for (int i = 0; i < A.Memsize; i++) {
+        A.pVector[i] = pVector[i] - v.pVector[i];
+    }
+    return A;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T> &v)
 {
-    if (Memsize!=v.Memsize) {
+    if (size != v.size || startIndex != v.startIndex) {
         throw 'FALL';
     }
     T sum=0;
