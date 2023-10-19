@@ -31,7 +31,11 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-    ADD_FAILURE();
+    TVector<int> gold(10);
+    for (int i = 0; i < gold.getSize(); i++)
+        gold[i] = 69;
+    TVector<int> silver(gold);
+    EXPECT_EQ(gold, silver);
 }
 
 TEST(TVector, copied_vector_has_its_own_memory)
