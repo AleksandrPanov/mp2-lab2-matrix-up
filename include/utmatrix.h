@@ -232,7 +232,7 @@ void TVector<T>::setElement(int index, T element)
 template <class T>
 void TVector<T>::setElement(size_t index, T element)
 {
-    if (index < 0 || index >=) throw(1);
+    if (index < 0 || index >=size) throw(1);
     pVector[index] = element;
 }
 
@@ -316,7 +316,7 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T>& mt)
     if (this->size != 0 && this->size != mt.size) {
         this->size = mt.size;
         delete[] this->pVector;
-        this->pVector = new TVector<T>[size];
+        this->pVector = new TVector<T>[this->size];
     }
     for (int i = 0; i < this->size; i++)
         this->pVector[i] = mt.pVector[i];
@@ -326,11 +326,17 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T>& mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T>& mt)
 {
-    return TVector::operator+(mt);
+    for (int i = 0; i < size - startIndex; i++) {
+        this->pVector[i] = this->pVector[i] + mt.pVector[i];
+    }
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T>& mt)
 {
-    return TVector::operator-(mt);
+    for (int i = 0; i < size - startIndex; i++) {
+        this->pVector[i] = this->pVector[i] - mt.pVector[i];
+    }
+    return *this;
 } /*-------------------------------------------------------------------------*/
