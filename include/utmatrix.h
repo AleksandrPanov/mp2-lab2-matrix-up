@@ -289,7 +289,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
-    if ((s * s) > TVector<T>::max_size)
+    if (static_cast<unsigned long long>(s * s) > TVector<T>::max_size)
         throw - 1;
     for (int i = 0; i < s; i++)
         TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
@@ -306,27 +306,47 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
+    if (TVector<TVector<T>>::size != mt.size || TVector<TVector<T>>::startIndex != mt.startIndex)
+        return false;
+    for (int i = 0; i < TVector<TVector<T>>::size; i++) {
+        if (TVector<TVector<T>>::pVector[i] != mt.pVector[i])
+            return false;
+    }
+    return true;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T> &mt) const
 {
+    return !(*this == mt);
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
+    if (this == &mt)
+        return *this;
+    this->size = mt.size;
+    this->startIndex = mt.startIndex;
+    delete[] this->pVector;
+    this->pVector = new TVector<T>[this->size];
+    for (int i = 0; i < this->size; i++)
+        TVector<TVector<T>>::pVector[i] = mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
+    for (int i = 0; i < this->size; i++)
+        TVector<TVector<T>>::pVector[i] = TVector<TVector<T>>::pVector[i] + mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
+    for (int i = 0; i < this->size; i++)
+        TVector<TVector<T>>::pVector[i] = TVector<TVector<T>>::pVector[i] - mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
