@@ -142,13 +142,17 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-    TMatrix<int> m(3);
-    m[0][0] = 6;
-    m[0][1] = 1;
+    TMatrix<int> m(2);
 
-    TMatrix<int> m1(3);
-    m1[0][0] = 6;
-    m1[0][1] = 1;
+    TMatrix<int> m1(2);
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = i; j < 2; j++)
+        {
+            m[i][j] = 2;
+            m1[i][j] = 2;
+        }
+    }
 
     EXPECT_EQ(m, m1);
 }
