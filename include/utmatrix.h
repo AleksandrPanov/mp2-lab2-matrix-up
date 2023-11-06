@@ -279,7 +279,7 @@ template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt): TVector<TVector<T> >(mt) {
     TVector<TVector<T>>::size = mt.size;
     TVector<TVector<T>>::startIndex = mt.startIndex;
-    pVector = new TVector<T>[TVector<TVector<T>>::size];
+    TVector<TVector<T>>::pVector = new TVector<T>[TVector<TVector<T>>::size];
     for (int i = 0; i < TVector<TVector<T>>::size; i++)
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
 }
