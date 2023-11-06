@@ -110,18 +110,19 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
-    int s = 3;
-    TMatrix<int> m(s);
-    m[0][0] = 1;
-    m[0][1] = 2;
 
-    int s1 = 4;
-    TMatrix<int> m1(s1);
+    TMatrix<int> m1(3);
+    TMatrix<int> m2(4);
+
     m1[0][0] = 2;
     m1[0][1] = 1;
 
-    m1 = m;
-    ASSERT_NO_THROW(s1, m.getSize());
+    m2[0][0] = 1;
+    m2[0][1] = 2;
+
+    m2 = m1;
+
+    EXPECT_EQ(3, m1.getSize());
 }
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
