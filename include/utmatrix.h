@@ -371,7 +371,7 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
         this->size = mt.size;
         this->startIndex = mt.startIndex;
         delete[] this->pVector;
-        this->pVector = new TVector<T>[size];
+        this->pVector = new TVector<T>[this->size];
         for (int i = 0; i < this->size; i++)
             this->pVector[i] = mt.pVector[i];
     }
