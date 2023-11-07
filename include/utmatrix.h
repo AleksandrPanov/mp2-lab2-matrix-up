@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <limits>
+#include <algorithm>
 
 class Error : private std::exception
 {
@@ -347,7 +348,7 @@ bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
     if (size == mt.size && startIndex == mt.startIndex) {
         for (int i = 0; i < size; i++)
-            if (pVector[i] != mt.pVector[i])
+            if (this->pVector[i] != mt.pVector[i])
                 return false;
         return true;
     }
@@ -369,10 +370,10 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
     if (*this != mt) {
         size = mt.size;
         startIndex = mt.startIndex;
-        delete[] pVector;
-        pVector = new TVector<T>[size];
+        delete[] this->pVector;
+        this->pVector = new TVector<T>[size];
         for (int i = 0; i < size; i++)
-            pVector[i] = mt.pVector[i];
+            this->pVector[i] = mt.pVector[i];
     }
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -385,7 +386,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
         throw a;
     }
     for (int i = 0; i < size; i++)
-        pVector[i] = pVector[i] + mt.pVector[i];
+        this->pVector[i] = this->pVector[i] + mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
 
@@ -397,6 +398,6 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
         throw a;
     }
     for (int i = 0; i < size; i++)
-        pVector[i] = pVector[i] - mt.pVector[i];
+        this->pVector[i] = this->pVector[i] - mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
