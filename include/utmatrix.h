@@ -346,8 +346,8 @@ TMatrix<T>::TMatrix(const TVector<TVector<T>> &mt):
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T> &mt) const
 {
-    if (size == mt.size && startIndex == mt.startIndex) {
-        for (int i = 0; i < size; i++)
+    if (this->size == mt.size && this->startIndex == mt.startIndex) {
+        for (int i = 0; i < this->size; i++)
             if (this->pVector[i] != mt.pVector[i])
                 return false;
         return true;
@@ -368,11 +368,11 @@ template <class T> // присваивание
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 {
     if (*this != mt) {
-        size = mt.size;
-        startIndex = mt.startIndex;
+        this->size = mt.size;
+        this->startIndex = mt.startIndex;
         delete[] this->pVector;
         this->pVector = new TVector<T>[size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < this->size; i++)
             this->pVector[i] = mt.pVector[i];
     }
     return *this;
@@ -381,11 +381,11 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
 template <class T> // сложение
 TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
-    if (size != mt.size || startIndex != mt.startIndex) {
+    if (this->size != mt.size || this->startIndex != mt.startIndex) {
         Error a;
         throw a;
     }
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
         this->pVector[i] = this->pVector[i] + mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
@@ -393,11 +393,11 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 template <class T> // вычитание
 TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
-    if (size != mt.size || startIndex != mt.startIndex) {
+    if (this->size != mt.size || this->startIndex != mt.startIndex) {
         Error a;
         throw a;
     }
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
         this->pVector[i] = this->pVector[i] - mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
