@@ -373,7 +373,7 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
         return *this;
     delete[] TVector<TVector<T> >::pVector;
     TVector<TVector<T> >::size = mt.size;
-    TVector<TVector<T> >::pVector = new TVector<T>[size];
+    TVector<TVector<T> >::pVector = new TVector<T>[TVector<TVector<T> >::size];
     for (size_t i = 0; i < TVector<TVector<T>>::size; i++)
     {
         TVector<TVector<T> >::pVector[i] = mt.pVector[i];
