@@ -9,7 +9,7 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
-    ASSERT_ANY_THROW(TMatrix<int> m(500000000));
+    ASSERT_ANY_THROW(TMatrix<int> m(65536); std::cout << m);
 }
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)

@@ -310,6 +310,8 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
+    if (s < 0 || static_cast<unsigned long long>(s)*static_cast<unsigned long long>(s) >= static_cast<unsigned long long>(TVector<TVector<T> >::max_size))
+        throw "Error";
     for (int i = 0; i < s; i++)
     {
         TVector<TVector<T> >::pVector[i] = TVector<T>(s, i);
@@ -319,6 +321,8 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 template <class T>
 TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T> >(s)
 {
+    if (s < 0 || static_cast<unsigned long long>(s) >= static_cast<unsigned long long>(TVector<TVector<T> >::max_size))
+        throw "Error";
     for (size_t i = 0; i < s; i++)
     {
         TVector<TVector<T> >::pVector[i] = TVector<T>(s, i);
