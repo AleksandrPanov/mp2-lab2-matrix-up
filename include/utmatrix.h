@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <limits>
+#include <algorithm>
 
 struct OutOfIndException {
     int a;
@@ -180,20 +181,20 @@ template <class T> // прибавить скаляр
 TVector<T> TVector<T>::operator+(const T &val)
 {
     startIndex = 0;
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         pVector[i] += val;
     }
-    return TVector<T>;
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычесть скаляр
 TVector<T> TVector<T>::operator-(const T &val)
 {
     startIndex = 0;
-    for (i = 0; i < size; i++) {
-        pVector[i] += val;
+    for (int i = 0; i < size; i++) {
+        pVector[i] -= val;
     }
-    return TVector<T>;
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // умножить на скаляр
@@ -203,15 +204,21 @@ TVector<T> TVector<T>::operator*(const T &val)
         startIndex = size;
         pVector[size] = 0;
     }
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         pVector[i] *= val;
     }
-    return TVector<T>;
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
+    TVector<T> temp;
+    temp.size = size > v.size ? size : v.size;
+    //temp.size = max(size, v.size);
+    temp.startIndex = startIndex > v.startIndex ? v.startIndex : startIndex;
+    //temp.startIndex = min(startIndex, v.startIndex);
+    return temp;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
@@ -240,6 +247,13 @@ void TVector<T>::setElement(int index, T element)
     if (index < 0 || index >= size) {
         throw OutOfIndException();
     }
+    /*if (index < startIndex)
+    {
+        for (int i = index; i < startIndex; i++) {
+            pVector[i]
+        }
+        startIndex = index;
+    }*/
     pVector[index] = element;
 }
 

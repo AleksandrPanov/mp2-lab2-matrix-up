@@ -73,9 +73,8 @@ TEST(TVector, can_get_start_index)
 TEST(TVector, can_set_and_get_element)
 {
     TVector<int> v(4);
-    v[0] = 4;
-
-    EXPECT_EQ(4, v[0]);
+    v.setElement(2, 5);
+    EXPECT_EQ(5, v.getElement(2));
 }
 
 TEST(TVector, throws_when_set_element_with_negative_index)
@@ -154,26 +153,63 @@ TEST(TVector, compare_vector_with_itself_return_true)
 
 TEST(TVector, vectors_with_different_size_are_not_equal)
 {
-    ADD_FAILURE();
+    TVector<int> a(4);
+    TVector<int> b(4);
+    for (int i = 0; i < a.getSize(); i++) {
+        a[i] = 10;
+        b[i] = -4;
+    }
+    EXPECT_NE(a, b);
 }
 
 TEST(TVector, can_add_scalar_to_vector)
 {
-    ADD_FAILURE();
+    TVector<int> a(4);
+    TVector<int> b(4);
+    for (int i = 0; i < a.getSize(); i++) {
+        a[i] = 10;
+        b[i] = -4;
+    }
+    b = b + 14;
+    EXPECT_EQ(a, b);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)
 {
-    ADD_FAILURE();
+    TVector<int> a(4);
+    TVector<int> b(4);
+    for (int i = 0; i < a.getSize(); i++) {
+        a[i] = 10;
+        b[i] = -4;
+    }
+    a = a - 14;
+    EXPECT_EQ(a, b);
 }
 
 TEST(TVector, can_multiply_scalar_by_vector)
 {
-    ADD_FAILURE();
+    TVector<int> a(4);
+    TVector<int> b(4);
+    for (int i = 0; i < a.getSize(); i++) {
+        a[i] = 10;
+        b[i] = 2;
+    }
+    a = a * 5;
+    EXPECT_EQ(a, b);
 }
 
 TEST(TVector, can_add_vectors_with_equal_size)
 {
+    /*TVector<int> a(4);
+    TVector<int> b(4);
+    TVector<int> c(4);
+    for (int i = 0; i < a.getSize(); i++) {
+        a[i] = 10;
+        b[i] = 2;
+        c[i] = 12;
+    }
+    a = a + b;
+    EXPECT_EQ(a, c);*/
     ADD_FAILURE();
 }
 
