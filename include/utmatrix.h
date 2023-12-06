@@ -83,14 +83,14 @@ TVector<T>::TVector(int _size, int startIndex)
         size = _size;
         pVector = new T[_size - startIndex];
         for (int i = 0; i < size - startIndex; i++)
-            pVector[i] = 1;
+            pVector[i] = (T)1;
     }
 } /*-------------------------------------------------------------------------*/
 
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex)
 {
-    if (startIndex < 0 || _size>TVector::max_size || _size<0 || startIndex>size)
+    if (startIndex < 0 || _size>99999999 || _size<0 || startIndex>_size)
     {
         throw 123;
     }
@@ -99,8 +99,8 @@ TVector<T>::TVector(size_t _size, size_t startIndex)
         this->startIndex = startIndex;
         size = _size;
         pVector = new T[_size - startIndex];
-        for (int i = 0; i < size - startIndex; i++)
-            pVector[i] = 0;
+        for (size_t i = 0ull; i < size - startIndex; i++)
+            pVector[i] = (T)1; // было 0 XDDDDDDDDDDDDDDDDDD
     }
 } /*-------------------------------------------------------------------------*/
 
@@ -274,6 +274,12 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
     {
         TVector<T> ans(v.size);
         TVector<T> tempv(v);
+        for (int i = 0; i < v.size; i++)
+            if ((i < v.startIndex) && (i < this->startIndex))
+            {
+                ans[i] = 0;
+            }
+                
         if (tempv.startIndex <= startIndex)
         {
             for (int i = tempv.startIndex; i < startIndex; i++)
@@ -282,7 +288,7 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
             }
             for (int i = startIndex; i < tempv.size; i++)
             {
-                ans[i] = tempv[i] + this->pVector[i-startIndex];
+                ans[i] = tempv[i] + this->operator[](i);
             }
                 
         }
@@ -294,7 +300,6 @@ TVector<T> TVector<T>::operator+(const TVector<T> &v)
                 ans[i] = tempv[i] + this->pVector[i-startIndex];
         }
        
-        
         ans = ans.cut(ans);
         return ans;
     }
@@ -307,7 +312,7 @@ TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
     auto temp = v;
     temp = temp*(-1);
-  
+    
     return (*this + temp);
 
 } /*-------------------------------------------------------------------------*/
@@ -342,7 +347,7 @@ T& TVector<T>::getElement(int index)
     if (index > startIndex)
         return pVector[this->size - index];
     else
-        return (0);
+        return (T)0;
 }
 
 template <class T>
@@ -395,7 +400,7 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
     
     for (int i = 0; i < s; i++)
     {
-        TVector<TVector<T>>::pVector[i] = TVector<T>(s,i);
+        pVector[i] = TVector<T>(s,i);
     }
 } /*-------------------------------------------------------------------------*/
 

@@ -243,7 +243,10 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
     test2[1] = 24;
     ex[1] = -1;
     ex[2] = 0;
-    ASSERT_EQ(ex, test1 - test2);
+    auto test3 = test1 - test2;
+    
+    
+    ASSERT_EQ(ex, test3);
 }
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
