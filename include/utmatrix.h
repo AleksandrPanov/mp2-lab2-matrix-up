@@ -459,12 +459,12 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
     
     for (int i = 0; i < this->size; i++)
         std::cout << TVector<TVector<T>>::pVector[i];
-    TVector<TVector<T>>::size = mt.size;
+    this->size = mt.size;
     delete[]TVector<TVector<T>>::pVector;
     TVector<TVector<T>>::pVector = new TVector<T>[this->size];
     for (int i = 0; i < this->size; i++)
     {
-        TVector<TVector<T>>::pVector[i] = TVector<T>(size);
+        TVector<TVector<T>>::pVector[i] = TVector<T>(this->size);
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
     }
 
