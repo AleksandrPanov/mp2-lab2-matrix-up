@@ -342,14 +342,23 @@ T TVector<T>::operator*(const TVector<T> &v)
 } /*-------------------------------------------------------------------------*/
 
 template <class T>
-T& TVector<T>::getElement(int index)
+T& TVector<T>::getElement(int pos)
 {
-    if (index > startIndex)
-        return pVector[this->size - index];
+    if (pos >= this->size || pos < 0)
+    {
+        throw 123;
+    }
     else
-        return (T)0;
+    {
+        if (pos < this->startIndex)
+        {
+            T temp = 0;
+            return temp;
+        }
+        else
+            return pVector[pos - startIndex];
+    }
 }
-
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
