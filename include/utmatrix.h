@@ -416,7 +416,12 @@ template <class T> // конструктор преобразования тип
 TMatrix<T>::TMatrix(const TVector<TVector<T> > &mt):
   TVector<TVector<T> >(mt) 
 {
-    
+    TVector<TVector<T> >::size = mt.size;
+    TVector<TVector<T> >::pVector = new TVector<T>[TVector<TVector<T> >::size];
+    for (size_t i = 0; i < TVector<TVector<T> >::size; i++)
+    {
+        TVector<TVector<T> >::pVector[i] = mt.pVector[i];
+    }
 }
 
 template <class T> // сравнение
