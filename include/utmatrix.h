@@ -407,8 +407,8 @@ TMatrix<T>::TMatrix(const TMatrix<T> &mt):
     auto pVector = new TVector<TVector<T>>(mt.size);
     for (int i = 0 ; i < size;i++)
         this->pVector[i]=mt.pVector[i];*/
-    TVector<TVector<T>>::size = mt.size;
-    for (int i = 0; i < size; i++)
+    this->size = mt.size;
+    for (int i = 0; i < this->size; i++)
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
 }
 
@@ -457,12 +457,12 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &mt)
         this->pVector[i] = mt.pVector[i];
     }*/
     
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
         std::cout << TVector<TVector<T>>::pVector[i];
     TVector<TVector<T>>::size = mt.size;
     delete[]TVector<TVector<T>>::pVector;
     TVector<TVector<T>>::pVector = new TVector<T>[this->size];
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < this->size; i++)
     {
         TVector<TVector<T>>::pVector[i] = TVector<T>(size);
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
@@ -477,7 +477,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
 {
     if (this->size == mt.size)
     {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < this->size; i++)
             TVector<TVector<T>>::pVector[i] = TVector<TVector<T>>::pVector[i] + mt.pVector[i];
         return *this;
     }
@@ -491,7 +491,7 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
 {
     if (this->size == mt.size)
     {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < this->size; i++)
             TVector<TVector<T>>::pVector[i] = TVector<TVector<T>>::pVector[i] - mt.pVector[i];
         return *this;
     }
