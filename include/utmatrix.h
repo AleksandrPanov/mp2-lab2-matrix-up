@@ -400,7 +400,8 @@ TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
     
     for (int i = 0; i < s; i++)
     {
-        pVector[i] = TVector<T>(s,i);
+        this->pVector[i] = TVector<T>(s,i);
+        
     }
 } /*-------------------------------------------------------------------------*/
 
@@ -408,10 +409,7 @@ template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
   TVector<TVector<T>>(mt)
 {
-   /* this->size = mt.size;
-    auto pVector = new TVector<TVector<T>>(mt.size);
-    for (int i = 0 ; i < size;i++)
-        this->pVector[i]=mt.pVector[i];*/
+   
     this->size = mt.size;
     for (int i = 0; i < this->size; i++)
         TVector<TVector<T>>::pVector[i] = mt.pVector[i];
