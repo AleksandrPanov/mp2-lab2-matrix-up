@@ -362,6 +362,19 @@ T& TVector<T>::getElement(int pos)
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
+    if (index >= 0)
+    {
+
+
+        if (index > this->startIndex)
+        {
+            this->operator[](index) = element;
+        }
+        else
+        {
+            
+        }
+    }
 }
 
 // Верхнетреугольная матрица
