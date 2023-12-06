@@ -125,7 +125,7 @@ T& TVector<T>::operator[](int pos)
         throw OutOfIndException();
     }
     else if (pos < startIndex) {
-        T temp =0;
+        T temp = 0;
         return temp;
     }
     return pVector[pos-startIndex];
@@ -213,23 +213,74 @@ TVector<T> TVector<T>::operator*(const T &val)
 template <class T> // сложение
 TVector<T> TVector<T>::operator+(const TVector<T> &v)
 {
-    TVector<T> temp;
-    temp.size = size > v.size ? size : v.size;
-    //temp.size = max(size, v.size);
-    temp.startIndex = startIndex > v.startIndex ? v.startIndex : startIndex;
-    //temp.startIndex = min(startIndex, v.startIndex);
-    return temp;
+    if (size != v.size) {
+        throw OutOfIndException();
+    }
+    else {
+        TVector<T> temp(size);
+        temp.size = size;
+        if (startIndex == v.startIndex) {
+            temp.startIndex = startIndex;
+            for (int i = temp.startIndex; i < size; i++) {
+                temp.pVector[i-startIndex] = pVector[i] + v.pVector[i];
+            }
+        }
+        else {
+            if (startIndex < v.startIndex) {
+                temp.startIndex = startIndex;
+                for (int i = temp.startIndex; i < v.startIndex; i++) {
+                    temp.pVector[i] = pVector[i];
+                }
+                for (int i = v.startIndex; i < v.size; i++) {
+                    temp.pVector[i] = pVector[i] + v.pVector[i];
+                }
+            }
+            else {
+                temp.startIndex = v.startIndex;
+                for (int i = temp.startIndex; i < startIndex; i++) {
+                    temp.pVector[i] = v.pVector[i];
+                }
+                for (int i = startIndex; i < size; i++) {
+                    temp.pVector[i] = pVector[i] + v.pVector[i];
+                }
+            }
+        }
+        return temp;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // вычитание
 TVector<T> TVector<T>::operator-(const TVector<T> &v)
 {
+    if (size != v.size) {
+        throw OutOfIndException();
+    }
+    else {
+        TVector<T> temp(v.size);
+        temp = v;
+        temp = temp * (-1);
+        return temp + *this;
+    }
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // скалярное произведение
 T TVector<T>::operator*(const TVector<T> &v)
 {
-    return T();
+    T sum = 0; 
+    
+    if (size != v.size) {
+        throw OutOfIndException();
+    }
+    else {
+        TVector<T> temp(v.size);
+        if (startIndex > v.startIndex) temp.startIndex = startIndex;
+        else temp.startIndex = v.startIndex;
+        for (int i = temp.startIndex; i < size; i++) {
+            sum += v.pVector[i] * pVector[i];
+        }
+        return sum;
+    }
+    
 } /*-------------------------------------------------------------------------*/
 
 template <class T>
