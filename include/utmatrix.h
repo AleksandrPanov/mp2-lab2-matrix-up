@@ -256,7 +256,25 @@ T& TVector<T>::getElement(int index)const
 }
 
 template <class T>
+T& TVector<T>::getElement(size_t index)const
+{
+    if (index < 0 || index + startIndex >= size) {
+        throw 'FALL';
+    }
+    return pVector[index];
+}
+
+template <class T>
 void TVector<T>::setElement(int index, T element)
+{
+    if (index < 0 || index + startIndex >= size) {
+        throw 'FALL';
+    }
+    pVector[index] = element;
+}
+
+template <class T>
+void TVector<T>::setElement(size_t index, T element)
 {
     if (index < 0 || index + startIndex >= size) {
         throw 'FALL';
@@ -314,6 +332,18 @@ TMatrix<T>::TMatrix(int s) : TVector<TVector<T>>(s)
         TVector<TVector<T>>::pVector[i] = a;
     }
 } /*-------------------------------------------------------------------------*/
+
+template <class T>
+TMatrix<T>::TMatrix(size_t s) : TVector<TVector<T>>(s)
+{
+    if (static_cast<unsigned long long>(static_cast<unsigned long long>(s) * static_cast<unsigned long long>(s)) > static_cast<unsigned long long>(TVector<T>::max_size)) {
+        throw 'FALL';
+    }
+    for (int i = 0; i < s; i++) {
+        TVector<T> a(s, i);
+        TVector<TVector<T>>::pVector[i] = a;
+    }
+}
 
 template <class T> // конструктор копирования
 TMatrix<T>::TMatrix(const TMatrix<T> &mt):
