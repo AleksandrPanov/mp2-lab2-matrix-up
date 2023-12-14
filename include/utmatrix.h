@@ -272,10 +272,6 @@ T& TVector<T>::getElement(size_t index)
         Error a;
         throw a;
     }
-    if (index < startIndex) {
-        T res = 0;
-        return res;
-    }
     else
         return pVector[index - startIndex];
 }
@@ -307,17 +303,7 @@ void TVector<T>::setElement(size_t index, T element)
         Error a;
         throw a;
     }
-    if (index < startIndex) {
-        TVector<T> res((size_t)size, index);
-        res.pVector[0] = element;
-        for (int i = 1; i < startIndex - index; i++)
-            res.pVector[i] = 0;
-        for (int i = startIndex - index; i < size - index; i++)
-            res.pVector[i] = pVector[i + index - startIndex];
-        *this = res;
-    }
-    else
-        pVector[index - startIndex] = element;
+    pVector[index - startIndex] = element;
 }
 
 // Верхнетреугольная матрица
