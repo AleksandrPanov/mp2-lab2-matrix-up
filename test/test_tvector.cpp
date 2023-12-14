@@ -12,6 +12,18 @@ TEST(TVector, cant_create_too_large_vector)
     ASSERT_ANY_THROW(TVector<int> v(TVector<int>::max_size + static_cast<size_t>(1)));
 }
 
+TEST(TVector, can_create_huge_vector)
+{
+    const size_t size = 2000ull * 1000ull * 1000ull * 1000ull;
+    const size_t startIndex = size - 10ull;
+    TVector<double> v1(size, startIndex);
+    ASSERT_NO_THROW(v1.setElement(size - 1ull, 1.0));
+
+    EXPECT_EQ(size, v1.getSize());
+    EXPECT_EQ(1.0, v1.getElement(size - 1ull));
+
+}
+
 TEST(TVector, throws_when_create_vector_with_negative_length)
 {
     ASSERT_ANY_THROW(TVector<int> v(-5));

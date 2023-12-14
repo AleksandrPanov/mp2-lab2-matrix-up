@@ -84,7 +84,7 @@ TVector<T>::TVector(int _size, int startIndex): size(_size), startIndex(startInd
 template <class T>//конструктор инициализации
 TVector<T>::TVector(size_t _size, size_t startIndex) : size(_size), startIndex(startIndex)
 {
-    if (size < 0 || size > max_size || startIndex < 0 || startIndex >= size) {
+    if (size < 0  || startIndex < 0 || startIndex >= size) {
         Error a;
         throw a;
     }
@@ -266,6 +266,21 @@ T& TVector<T>::getElement(int index)
 }
 
 template <class T>
+T& TVector<T>::getElement(size_t index)
+{
+    if (index >= size || index < 0) {
+        Error a;
+        throw a;
+    }
+    if (index < startIndex) {
+        T res = 0;
+        return res;
+    }
+    else
+        return pVector[index - startIndex];
+}
+
+template <class T>
 void TVector<T>::setElement(int index, T element)
 {
     if (index >= size || index < 0) {
@@ -274,6 +289,26 @@ void TVector<T>::setElement(int index, T element)
     }
     if (index < startIndex) {
         TVector<T> res((int)size, index);
+        res.pVector[0] = element;
+        for (int i = 1; i < startIndex - index; i++)
+            res.pVector[i] = 0;
+        for (int i = startIndex - index; i < size - index; i++)
+            res.pVector[i] = pVector[i + index - startIndex];
+        *this = res;
+    }
+    else
+        pVector[index - startIndex] = element;
+}
+
+template <class T>
+void TVector<T>::setElement(size_t index, T element)
+{
+    if (index >= size || index < 0) {
+        Error a;
+        throw a;
+    }
+    if (index < startIndex) {
+        TVector<T> res((size_t)size, index);
         res.pVector[0] = element;
         for (int i = 1; i < startIndex - index; i++)
             res.pVector[i] = 0;
