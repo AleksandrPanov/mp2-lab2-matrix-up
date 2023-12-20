@@ -15,8 +15,8 @@ TEST(TVector, can_create_vector_with_positive_length_size_t)
 
 TEST(Tvector, can_create_huge_vector)
 {
-    size_t size = 200ull * 100ull * 100ull * 100ull;
-    size_t startIndex = size - 10ull;
+    const size_t size = 200ull * 100ull * 100ull * 100ull;
+    const size_t startIndex = size - 10ull;
     TVector<double> v1(size, startIndex);
     ASSERT_NO_THROW(v1.setElement(size - 1ull, 1.0));
 
