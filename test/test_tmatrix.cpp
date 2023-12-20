@@ -87,7 +87,7 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
-    TMatrix<int> mat(2), mat1(5);
+    TMatrix<int> mat(5), mat1(2);
     mat[2][2]=1;
     mat[3][3]=2;
     mat1=mat;
@@ -96,7 +96,7 @@ TEST(TMatrix, assign_operator_change_matrix_size)
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
 {
-    TMatrix<int> mat(2), mat1(5);
+    TMatrix<int> mat(5), mat1(2);
     mat[2][2]=1;
     mat[3][3]=2;
     mat1=mat;
@@ -115,7 +115,7 @@ TEST(TMatrix, compare_equal_matrices_return_true)
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
-    TMatrix<int> mat(2);
+    TMatrix<int> mat(5);
     mat[2][2]=1;
     mat[3][3]=2;
     EXPECT_EQ(true,mat==mat);
@@ -123,7 +123,7 @@ TEST(TMatrix, compare_matrix_with_itself_return_true)
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
 {
-    TMatrix<int> mat(2), mat1(5);
+    TMatrix<int> mat(5), mat1(2);
     EXPECT_NE(mat,mat1);
 }
 

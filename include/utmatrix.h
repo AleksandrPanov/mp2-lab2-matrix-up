@@ -146,7 +146,7 @@ bool TVector<T>::operator==(const TVector &v) const
         }
         return true;
     }
-    return false;
+    else return false;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
