@@ -127,7 +127,7 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
     EXPECT_NE(mat,mat1);
 }
 
-/*TEST(TMatrix, can_add_matrices_with_equal_size)
+TEST(TMatrix, can_add_matrices_with_equal_size)
 {
     TMatrix<int> mat(5), mat1(5), fin(5);
     mat[2][2]=1;
@@ -161,4 +161,4 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
     TMatrix<int> mat(2), mat1(5);
     ASSERT_ANY_THROW(mat-mat1);
-}*/
+}
