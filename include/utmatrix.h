@@ -418,7 +418,7 @@ TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &mt)
     }
     else{
         for (int i=0; i<this->size; i++){
-            this->pVector[i]+=mt.pVector[i];
+            this->pVector[i]=this->pVector[i]+mt.pVector[i];
         }
     }
     return *this;
@@ -433,7 +433,7 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &mt)
     }
     else{
         for (int i=0; i<this->size; i++){
-            this->pVector[i]-=mt.pVector[i];
+            this->pVector[i]=this->pVector[i]-mt.pVector[i];
         }
     }
     return *this;
