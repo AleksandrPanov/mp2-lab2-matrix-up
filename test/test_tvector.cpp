@@ -231,12 +231,13 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 }
 TEST(Tvector, can_create_huge_vector)
 {
-    const size_t size = 200ull * 100ull * 100ull * 100ull;
-    const size_t startIndex = size - 10ull;
+    const size_t size = (unsigned long long)200 * (unsigned long long)100 * 
+        (unsigned long long)100 * (unsigned long long)100;
+    const size_t startIndex = size - (unsigned long long)10;
     TVector<double> v1(size, startIndex);
-    ASSERT_NO_THROW(v1.setElement(size - 1ull, 1.0));
+    ASSERT_NO_THROW(v1.setElement(size - (unsigned long long)1, 1.0));
 
     EXPECT_EQ(size, v1.getSize());
-    EXPECT_EQ(1.0, v1.getElement(size - 1ull));
+    EXPECT_EQ(1.0, v1.getElement(size - (unsigned long long)1));
 
 }

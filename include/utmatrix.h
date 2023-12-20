@@ -214,13 +214,13 @@ template <class T>
 T& TVector<T>::getElement(int index)
 {
     if (index < 0 || index >= size) throw(1);
-    return *pVector[index];
+    return pVector[index];
 }
 template <class T>
 T& TVector<T>::getElement(size_t index)
 {
     if (index < 0 || index >= size) throw(1);
-    return *pVector[index];
+    return pVector[index-startIndex];
 }
 
 template <class T>
@@ -233,7 +233,7 @@ template <class T>
 void TVector<T>::setElement(size_t index, T element)
 {
     if (index < 0 || index >=size) throw(1);
-    pVector[index] = element;
+    pVector[index-startIndex] = element;
 }
 
 // Верхнетреугольная матрица
