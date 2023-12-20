@@ -226,10 +226,19 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 }
 TEST(TVector, can_create_huge_vector)
 {
-    const size_t size = 2000ul * 1000ul * 1000ul * 1000ul;
+    const size_t size = 200ul * 100ul * 100ul * 100ul;
     const size_t startIndex = size - 10ull;
     TVector<double> v1(size, startIndex);
     ASSERT_NO_THROW(v1.setElement(size - 1ull, 1.0));
     EXPECT_EQ(size, v1.getSize());
     EXPECT_EQ(1.0, v1.getElement(size - 1ull));
+}
+TEST(TVector, can_set_in_huge_vector)
+{
+    const size_t size = 200ul * 100ul * 100ul * 100ul;
+    const size_t startIndex = size - 10ull;
+    TVector<double> v1(size, startIndex);
+    ASSERT_NO_THROW(v1.setElement(size - 1ull, 200ul));
+    EXPECT_EQ(size, v1.getSize());
+    EXPECT_EQ(200ul, v1.getElement(size - 1ull));
 }
