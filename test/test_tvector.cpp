@@ -1,25 +1,81 @@
 #include <gtest.h>
 #include "utmatrix.h"
 
-TEST(TVector, can_create_vector_with_positive_length)
+TEST(TVector, can_create_vector_with_positive_length_int)
 {
-    ASSERT_NO_THROW(TVector<int> v(5));
+    const int size = 5;
+    ASSERT_NO_THROW(TVector<int> v(size));
 }
 
-TEST(TVector, cant_create_too_large_vector)
+TEST(TVector, can_create_vector_with_positive_length_size_t)
+{
+    const size_t size = 5;
+    ASSERT_NO_THROW(TVector<int> v(size));
+}
+
+TEST(Tvector, can_create_huge_vector)
+{
+    const size_t size = 200ull * 100ull * 100ull * 100ull;
+    const size_t startIndex = size - 10ull;
+    TVector<double> v1(size, startIndex);
+    ASSERT_NO_THROW(v1.setElement(size - 1ull, 1.0));
+
+    EXPECT_EQ(size, v1.getSize());
+    EXPECT_EQ(1.0, v1.getElement(size - 1ull));
+
+}
+
+TEST(TVector, cant_create_too_large_vector_int)
 {
     // максимальный допустимый размер вектора = TVector<int>::max_size
     ASSERT_ANY_THROW(TVector<int> v(TVector<int>::max_size + static_cast<size_t>(1)));
 }
 
-TEST(TVector, throws_when_create_vector_with_negative_length)
+TEST(TVector, cant_create_too_large_vector_size_t)
 {
-    ASSERT_ANY_THROW(TVector<int> v(-5));
+    // максимальный допустимый размер вектора = TVector<int>::max_size
+    ASSERT_ANY_THROW(TVector<size_t> v(TVector<size_t>::max_size + static_cast<size_t>(1)));
 }
 
-TEST(TVector, throws_when_create_vector_with_negative_startindex)
+TEST(TVector, throws_when_create_vector_with_negative_length_int)
 {
-    ASSERT_ANY_THROW(TVector<int> v(5, -2));
+    const int size = -5;
+    ASSERT_ANY_THROW(TVector<int> v(size));
+}
+
+TEST(TVector, throws_when_create_vector_with_negative_length_size_t)
+{
+    const size_t size = -5;
+    ASSERT_ANY_THROW(TVector<int> v(size));
+}
+
+TEST(TVector, create_vector_with_startindex_int)
+{
+    const int size = 5;
+    const int startIndex = 2;
+    ASSERT_NO_THROW(TVector<int> v(size, startIndex));
+}
+
+TEST(TVector, create_vector_with_startindex_size_t)
+{
+    const size_t size = 5;
+    const size_t startIndex = 2;
+    ASSERT_NO_THROW(TVector<int> v(size, startIndex));
+}
+
+
+TEST(TVector, throws_when_create_vector_with_negative_startindex_int)
+{
+    const int size = 5;
+    const int startIndex = -2;
+    ASSERT_ANY_THROW(TVector<int> v(size, startIndex));
+}
+
+TEST(TVector, throws_when_create_vector_with_negative_startindex_size_t)
+{
+    const size_t size = 5;
+    const size_t startIndex = -2;
+    ASSERT_ANY_THROW(TVector<int> v(size, startIndex));
 }
 
 TEST(TVector, can_create_copied_vector)
@@ -63,12 +119,20 @@ TEST(TVector, can_get_start_index)
     EXPECT_EQ(2, v.getStartIndex());
 }
 
-TEST(TVector, can_set_and_get_element)
+TEST(TVector, can_set_and_get_element_with)
 {
     TVector<int> v(4);
     v[0] = 4;
 
     EXPECT_EQ(4, v[0]);
+}
+
+TEST(TVector, can_set_and_get_element)
+{
+    TVector<int> v(4);
+    v.getElement(0) = 4;
+
+    EXPECT_EQ(4, v.getElement(0));
 }
 
 TEST(TVector, throws_when_set_element_with_negative_index)
@@ -256,4 +320,15 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
     v1[1] = 2;
     v2[0] = 2;
     ASSERT_ANY_THROW(v1 * v2);
+}
+
+TEST(TVector, can_1)
+{
+    const int size1 = 2, size2 = 0;
+    TVector<int> v1(size1), v2;
+    v1[0] = 1;
+    v1[1] = 2;
+    v2 = v1 + 1;
+    v1 = v1 + 1;
+    EXPECT_EQ(v1, v2);
 }

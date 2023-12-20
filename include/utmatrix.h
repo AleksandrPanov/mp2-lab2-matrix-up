@@ -134,9 +134,10 @@ template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector &v)
 {
     if (this == &v) return *this;
+    if(size!=0)
+        delete[] pVector;
     size = v.size;
     startIndex = v.startIndex;
-    delete[] pVector;
     pVector = new T[size-startIndex];
     for (int i = 0; i < size-startIndex; i++)
         pVector[i] = v.pVector[i];
@@ -204,16 +205,29 @@ T TVector<T>::operator*(const TVector<T>& v)
 template <class T>
 T& TVector<T>::getElement(int index) const
 {
-    if (index < 0 || index + startIndex >= size) throw 1;
+    if (index < startIndex || index>= size) throw 1;
     return pVector[index];
+}
+
+template <class T>
+T& TVector<T>::getElement(size_t index) const
+{
+    if (index < startIndex || index >= size) throw 1;
+    return pVector[index-startIndex];
 }
 
 template <class T>
 void TVector<T>::setElement(int index, T element)
 {
-    if(index < 0 || index + startIndex >= size) 
-        throw 1;
-    pVector[index] = element;
+    if(index < startIndex || index>= size) throw 1;
+    pVector[index-startIndex] = element;
+}
+
+template <class T>
+void TVector<T>::setElement(size_t index, T element)
+{
+    if (index < startIndex || index >= size) throw 1;
+    pVector[index - startIndex] = element;
 }
 
 // Верхнетреугольная матрица
@@ -257,6 +271,16 @@ public:
 
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T>>(s)
+{
+    //unsigned long long x = (s * s);
+    if (static_cast<unsigned long long>(static_cast<unsigned long long>(s)* static_cast<unsigned long long>(s)) > static_cast<unsigned long long>(TVector<T>::max_size))
+        throw 1;
+    for (int i = 0; i < s; i++) {
+        TVector<TVector<T>>::pVector[i] = TVector<T>(s, i);
+    }
+} /*-------------------------------------------------------------------------*/
+template <class T>
+TMatrix<T>::TMatrix(size_t s): TVector<TVector<T>>(s)
 {
     //unsigned long long x = (s * s);
     if (static_cast<unsigned long long>(static_cast<unsigned long long>(s)* static_cast<unsigned long long>(s)) > static_cast<unsigned long long>(TVector<T>::max_size))

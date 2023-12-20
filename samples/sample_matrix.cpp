@@ -10,8 +10,10 @@
 
 int main()
 {
-   TMatrix<int> m(65536);
-    std::cout << m;
+    TMatrix<int> m(4);
+    m[0].setElement(0,4);
+
+    std::cout << m[0].getElement(0);
     // << "\n" << m2;
     //std::cout << a;
     //std::cout << a;
