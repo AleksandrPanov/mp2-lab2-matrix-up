@@ -31,9 +31,9 @@ public:
     ~TVector();
     size_t getSize() const     { return this->size;       } // размер вектора
     size_t getStartIndex() const{ return this->startIndex; } // индекс первого элемента
-    T& getElement(int i) const;
+    //T& getElement(int i) const;
     T& getElement(size_t i) const;
-    void setElement(int index, T element);
+    //void setElement(int index, T element);
     void setElement(size_t index, T element);
 
     T& operator[](int pos);                  // доступ
@@ -202,12 +202,12 @@ T TVector<T>::operator*(const TVector<T>& v)
     return summ;
 } /*-------------------------------------------------------------------------*/
 
-template <class T>
+/*template <class T>
 T& TVector<T>::getElement(int index) const
 {
     if (index < startIndex || index>= size) throw 1;
     return pVector[index];
-}
+}*/
 
 template <class T>
 T& TVector<T>::getElement(size_t index) const
@@ -216,12 +216,12 @@ T& TVector<T>::getElement(size_t index) const
     return pVector[index-startIndex];
 }
 
-template <class T>
+/*template <class T>
 void TVector<T>::setElement(int index, T element)
 {
     if(index < startIndex || index>= size) throw 1;
     pVector[index-startIndex] = element;
-}
+}*/
 
 template <class T>
 void TVector<T>::setElement(size_t index, T element)
