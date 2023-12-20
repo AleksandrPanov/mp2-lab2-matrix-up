@@ -237,5 +237,5 @@ TEST(Tvector, can_create_huge_vector)
     ASSERT_NO_THROW(v1.setElement((size_t)(size - 1ull), 1.0));
 
     EXPECT_EQ(size, v1.getSize());
-    EXPECT_EQ(1.0, v1.getElement(size - 1ull));
+    EXPECT_EQ(1.0, v1.getElement((size_t)(size - 1ull)));
 }
