@@ -26,22 +26,24 @@ TEST(TMatrix, can_create_copied_matrix)
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-    TMatrix<int> m(2);
-    m[0][0] = 1;
-    m[0][1] = 2;
-    m[1][1] = 3;
+    TMatrix<int> m(5);
+    for (int i = 0; i < 5; i++) {
+        for (int j = i; j < 5; j++) {
+            m[i][j] = 321;
+        }
+    }
     TMatrix<int> m1(m);
-    std::cout << m << std::endl;
-    std::cout << m1 << std::endl;
     EXPECT_EQ(m, m1);
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-    TMatrix<int> m(2);
-    m[0][0] = 1;
-    m[0][1] = 2;
-    m[1][1] = 3;
+    TMatrix<int> m(5);
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            m[i][j] = 321;
+        }
+    }
     TMatrix<int> m1(m);
     EXPECT_NE(&m, &m1);
 }
@@ -79,9 +81,13 @@ TEST(TMatrix, can_assign_matrix_to_itself)
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
-    TMatrix<int> m(3), m1(3);
-    m[1][1] = 1;
-    m[2][2] = 2;
+    TMatrix<int> m(5), m1(5);
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            m[i][j] = 321;
+            m1[i][j] = 0;
+        }
+    }
     m1 = m;
     EXPECT_EQ(m, m1);
 }
@@ -98,19 +104,25 @@ TEST(TMatrix, assign_operator_change_matrix_size)
 TEST(TMatrix, can_assign_matrices_of_different_size)
 {
     TMatrix<int> m(3), m1(5);
-    m[1][1] = 1;
-    m[2][2] = 2;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            m[i][j] = 321;
+        }
+    }
     m1 = m;
+    //if (m1 == m) { std::cout << "Good" << std::endl; }
     EXPECT_EQ(m, m1);
 }
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
     TMatrix<int> m1(3), m2(3);
-    m1[1][1] = 1;
-    m2[1][1] = 1;
-    m1[2][2] = 2;
-    m2[2][2] = 2;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            m1[i][j] = 321;
+            m2[i][j] = 321;
+        }
+    }
     EXPECT_EQ(m1, m2);
 }
 
@@ -133,13 +145,11 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
     TMatrix<int> m1(3), m2(3), res(3);
-    m1[0][1] = 1;
-    m1[2][2] = 2;
-    m2[1][1] = 3;
-    m2[2][2] = 4;
-    res[0][1] = m1[0][1] + m2[0][1];
-    res[2][2] = m1[2][2] + m2[2][2];
-    res[1][1] = m1[1][1] + m2[1][1];
+    for (int i = 0; i < 3; i++) {
+        for (int j = i; j < 3; j++) {
+            res[i][j] = 2;
+        }
+    }
     EXPECT_EQ(m1 + m2, res);
 }
 
@@ -152,15 +162,16 @@ TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
     TMatrix<int> m1(3), m2(3), res(3);
-    m1[0][1] = 1;
-    m1[2][2] = 2;
-    m2[1][1] = 3;
-    m2[2][2] = 4;
-    res[0][1] = m1[0][1] - m2[0][1];
-    res[2][2] = m1[2][2] - m2[2][2];
-    res[1][1] = m1[1][1] - m2[1][1];
-    EXPECT_EQ(m1 - m2, res);
+    for (int i = 0; i < 3; i++) {
+        for (int j = i; j < 3; j++) {
+            m1[i][j] = 3;
+            m2[i][j] = 2;
+        }
+    }
+    EXPECT_EQ(m1-m2, res);
 }
+
+
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
