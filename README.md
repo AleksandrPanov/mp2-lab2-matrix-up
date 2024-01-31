@@ -72,3 +72,5 @@ https://github.com/UNN-ITMM-Software/mp2-lab2-matrix
 
 [git]:         https://git-scm.com/book/ru/v2
 [gtest]:       https://github.com/google/googletest
+ 
+ just for the first commit
