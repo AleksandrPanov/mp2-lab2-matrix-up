@@ -4,7 +4,6 @@
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
 //
 // Верхнетреугольная матрица - реализация на основе шаблона вектора
-// for test commit on new laptop
 #pragma once
 
 #include <iostream>
